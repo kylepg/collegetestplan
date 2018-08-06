@@ -11,21 +11,27 @@ Version: 1.0
 /*============================
 =            MISC            =
 =============================*/
+body {
+  font-size: 1.1rem; }
+
 #main {
   min-height: 750px; }
 
 button {
   border-radius: 0; }
 
+.content-area {
+  width: 100% !important; }
+
 /*==============================
 =            HEADER            =
 ===============================*/
 .custom-logo {
-  width: 400px;
-  max-width: 400px; }
+  width: 300px;
+  max-width: 300px; }
   @media screen and (max-width: 600px) {
     .custom-logo {
-      max-width: 300px; } }
+      max-width: 200px; } }
 
 #menu-toggle {
   margin-top: 0; }
@@ -40,7 +46,20 @@ button {
 .site-header {
   padding-bottom: 0;
   border-bottom: none; }
+  .site-header .site-header-wrapper {
+    max-width: 1200px; }
+  .site-header a:hover,
+  .site-header a:active,
+  .site-header a:focus {
+    color: #b1b3b6; }
 
+@media screen and (min-width: 896px) {
+  .entry-hero {
+    min-height: 30vh; } }
+@media screen and (min-width: 768px) {
+  .entry-hero,
+  .site-content-wrapper .has-post-thumbnail .entry-header {
+    min-height: 30vh; } }
 #masthead {
   background-color: #24386a; }
 
@@ -48,7 +67,7 @@ button {
   display: none; }
 
 .main-navigation {
-  margin-top: 1.4em; }
+  margin-top: 0; }
   .main-navigation a {
     color: #fff;
     font-weight: 200;
@@ -86,3 +105,65 @@ button {
 
 .widget-area.widget-footer {
   background-color: #b1b3b6; }
+  .widget-area.widget-footer * {
+    border: none !important; }
+
+/*=========================================
+=            PAGE - DIRECTIONS            =
+=========================================*/
+#post-30 .entry-content ul {
+  margin-bottom: 30px !important; }
+#post-30 .left {
+  float: left;
+  width: 70%;
+  padding-right: 40px; }
+#post-30 .right {
+  float: left;
+  width: 30%; }
+@media (max-width: 800px) {
+  #post-30 .left {
+    width: 100%; }
+  #post-30 .right {
+    width: 100%; } }
+#post-30 img {
+  margin-bottom: 20px; }
+#post-30 .blue-wrapper {
+  padding: 10px 20px;
+  background-color: #4f83b4;
+  color: white;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  margin-bottom: 40px; }
+#post-30 .right > p {
+  background-color: #fafafa;
+  margin-top: 30px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); }
+
+/*======================================
+=            PAGE - PRICING            =
+=======================================*/
+#post-63 table {
+  border: none;
+  margin-bottom: 50px;
+  font-size: 1.1rem; }
+  @media (max-width: 800px) {
+    #post-63 table {
+      font-size: 0.9rem; } }
+  #post-63 table td {
+    border-width: 0px 0px 1px 0px;
+    border-bottom: 1px solid #dddddd; }
+  #post-63 table td:first-child {
+    color: #253968; }
+#post-63 .table-lg tr:nth-child(3) td:first-child,
+#post-63 .table-lg tr:nth-child(4) td:first-child,
+#post-63 .table-lg tr:nth-child(5) td:first-child {
+  padding-left: 40px; }
+  @media (max-width: 800px) {
+    #post-63 .table-lg tr:nth-child(3) td:first-child,
+    #post-63 .table-lg tr:nth-child(4) td:first-child,
+    #post-63 .table-lg tr:nth-child(5) td:first-child {
+      padding-left: 15px; } }
+#post-63 .table-sm tr {
+  margin-bottom: 20px; }

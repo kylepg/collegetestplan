@@ -1,0 +1,20 @@
+{
+  "name": "collegetestplan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish-theme-imac": "duck --username kylegeorge --password Q1jhDOOS9pX0 --upload ftp://kylepg.io/kylepg.io/collegetestplan/wp-content/themes/ /Volumes/ONE\\ -\\ 8TB/Dropbox/CODE/projects/collegetestplan/wp-content/themes/shoreditch-child --existing overwrite",
+    "publish-uploads-imac": "duck --username kylegeorge --password Q1jhDOOS9pX0 --upload ftp://kylepg.io/kylepg.io/collegetestplan/wp-content/ /Volumes/ONE\\ -\\ 8TB/Dropbox/CODE/projects/collegetestplan/wp-content/uploads --existing overwrite",
+    "sync": "browser-sync start --proxy 'collegetestplan.loc' --files 'wp-content/themes/shoreditch-child/**/*'"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-notify": "^0.4.5"
+  }
+}

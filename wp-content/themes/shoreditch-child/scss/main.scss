@@ -1,0 +1,228 @@
+/*
+Theme Name: Shoreditch Child
+Theme URI: http:/localhost;
+Description: Ya boi
+Author: Kyle George
+Author URI: N/A
+Template: Shoreditch
+Version: 1.0
+*/
+
+@import url("../shoreditch/style.css");
+/*============================
+=            MISC            =
+=============================*/
+
+body {
+    font-size: 1.1rem;
+}
+
+#main {
+    min-height: 750px;
+}
+
+button {
+    border-radius: 0;
+}
+
+.content-area {
+    width: 100% !important;
+}
+
+/*==============================
+=            HEADER            =
+===============================*/
+
+.custom-logo {
+    width: 300px;
+    max-width: 300px;
+    @media screen and (max-width: 600px) {
+        max-width: 200px;
+    }
+}
+
+#menu-toggle {
+    margin-top: 0;
+}
+
+.site-branding {
+    margin-left: 0;
+    margin-right: auto;
+    margin-top: 0.2em;
+    padding-right: 1.5em;
+    margin-bottom: 0.2em;
+}
+
+.site-header {
+    padding-bottom: 0;
+    border-bottom: none;
+    .site-header-wrapper {
+        max-width: 1200px;
+    }
+    a:hover,
+    a:active,
+    a:focus {
+        color: #b1b3b6
+    }
+}
+
+@media screen and (min-width: 896px) {
+    .entry-hero {
+        min-height: 30vh;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .entry-hero,
+    .site-content-wrapper .has-post-thumbnail .entry-header {
+        min-height: 30vh;
+    }
+}
+
+#masthead {
+    background-color: #24386a;
+}
+
+.site-title {
+    display: none;
+}
+
+.main-navigation {
+    margin-top: 0;
+    a {
+        color: #fff;
+        font-weight: 200;
+        border-color: #b1b3b6;
+    }
+    li {
+        border: none;
+    }
+    .primary-menu .current_page_item>a,
+    .primary-menu .current-menu-item>a,
+    .primary-menu .current_page_ancestor>a {
+        border-color: #b1b3b6;
+    }
+}
+
+#site-navigation {
+    @media screen and (max-width: 896px) {
+        margin: 1.4em 0em;
+    }
+}
+
+#menu-main-menu {
+    border-bottom: none;
+}
+
+.site-info {
+    display: none;
+}
+
+/*=================================
+=            HOME PAGE            =
+==================================*/
+
+.post-2 {
+    .entry-header {
+        display: none;
+    }
+}
+
+/*==============================
+=            FOOTER            =
+===============================*/
+
+.site-footer {
+    background-color: #b1b3b6;
+    border: 0;
+    padding: 0.5em;
+}
+
+.widget-area.widget-footer {
+    background-color: #b1b3b6;
+    * {
+        border: none !important;
+    }
+}
+
+/*=========================================
+=            PAGE - DIRECTIONS            =
+=========================================*/
+
+#post-30 {
+    .entry-content ul {
+        margin-bottom: 30px !important
+    }
+    .left {
+        float: left;
+        width: 70%;
+        padding-right: 40px;
+    }
+    .right {
+        float: left;
+        width: 30%
+    }
+    @media (max-width: 800px) {
+        .left {
+            width: 100%;
+        }
+        .right {
+            width: 100%;
+        }
+    }
+    img {
+        margin-bottom: 20px;
+    }
+    .blue-wrapper {
+        padding: 10px 20px;
+        background-color: #4f83b4;
+        color: white;
+        font-size: 16px;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+        -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+        margin-bottom: 40px;
+    }
+    .right>p {
+        background-color: #fafafa;
+        margin-top: 30px;
+        box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+        -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+    }
+}
+
+/*======================================
+=            PAGE - PRICING            =
+=======================================*/
+
+#post-63 {
+    table {
+        border: none;
+        margin-bottom: 50px;
+        font-size: 1.1rem;
+        @media (max-width: 800px) {
+            font-size: 0.9rem;
+        }
+        td {
+            border-width: 0px 0px 1px 0px;
+            border-bottom: 1px solid #dddddd;
+        }
+        td:first-child {
+            color: #253968;
+        }
+    }
+    .table-lg {
+        tr:nth-child(3) td:first-child,
+        tr:nth-child(4) td:first-child,
+        tr:nth-child(5) td:first-child {
+            padding-left: 40px;
+            @media (max-width: 800px) {
+                padding-left: 15px;
+            }
+        }
+    }
+    .table-sm {
+        tr {
+            margin-bottom: 20px;
+        }
+    }
+}
