@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Directions
+ * Template Name: Directions Template
  *
  * @package Shoreditch
  */
