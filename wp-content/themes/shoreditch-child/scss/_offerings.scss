@@ -1,0 +1,85 @@
+/*=======================================
+=            PAGE - OFFERINGS           =
+========================================*/
+
+@import 'colors';
+
+#post-25 {
+    padding-top: 4em;
+    .left {
+        float: left;
+        width: 30%;
+        padding-right: 40px;
+        position: relative;
+        ul {
+            list-style-type: none;
+            margin: 0;
+            font-size: 1.1em;
+            li {
+                color: $primary;
+                margin-bottom: 1em;
+                cursor: pointer;
+                opacity:0.5;
+                &:hover {
+                    color: $primaryLight;
+                }
+                &.active, &:hover {
+                    opacity: 1;
+                }
+                i {
+                    padding-right: 10px;
+                    width: 1.9em;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .right {
+        float: left;
+        width: 70%
+    }
+    @media (max-width: 800px) {
+        .left {
+            width: 100%;
+        }
+        .right {
+            width: 100%;
+        }
+    }
+    .offering-wrap {
+        display: none;
+        &.active {
+    display: block;
+        }
+    }
+    .item-wrap {
+        h4 {
+            font-weight: 300;
+            display:flex;
+            align-items:center;
+            justify-content: space-between;
+            & > span:nth-child(1) {
+                span {
+                    color: $secondary;
+                }
+            }
+            & > span:nth-child(2) {
+                font-size: 0.7em;
+                float: right;
+                font-weight: bold;
+                color: $primary;
+            }
+        }
+        p:not(:first-of-type), ul li {
+            font-size: 0.9em;
+        }
+        padding-left: 1em;
+        border-left:1px solid $primary;
+        margin-top: 3em;
+        .date-title {
+            margin: 0;
+            font-weight: bold;
+            color: #212121;
+        }
+    }
+}

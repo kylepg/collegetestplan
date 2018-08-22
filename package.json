@@ -1,20 +1,101 @@
 {
-  "name": "collegetestplan",
-  "version": "1.0.0",
-  "description": "",
-  "main": "Gruntfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "publish-theme-imac": "duck --username kylegeorge --password Q1jhDOOS9pX0 --upload ftp://kylepg.io/kylepg.io/collegetestplan/wp-content/themes/ /Volumes/ONE\\ -\\ 8TB/Dropbox/CODE/projects/collegetestplan/wp-content/themes/shoreditch-child --existing overwrite",
-    "publish-uploads-imac": "duck --username kylegeorge --password Q1jhDOOS9pX0 --upload ftp://kylepg.io/kylepg.io/collegetestplan/wp-content/ /Volumes/ONE\\ -\\ 8TB/Dropbox/CODE/projects/collegetestplan/wp-content/uploads --existing overwrite",
-    "sync": "browser-sync start --proxy 'collegetestplan.loc' --files 'wp-content/themes/shoreditch-child/**/*' --no-notify"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "grunt": "^1.0.0",
-    "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-notify": "^0.4.5"
-  }
+    "name": "collegetestplan",
+    "version": "1.0.0",
+    "description": "",
+    "main": "Gruntfile.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "publish-theme-imac": "duck --username kylegeorge --password Q1jhDOOS9pX0 --upload ftp://kylepg.io/kylepg.io/collegetestplan/wp-content/themes/ /Volumes/ONE\\ -\\ 8TB/Dropbox/CODE/projects/collegetestplan/wp-content/themes/shoreditch-child --existing overwrite",
+        "publish-uploads-imac": "duck --username kylegeorge --password Q1jhDOOS9pX0 --upload ftp://kylepg.io/kylepg.io/collegetestplan/wp-content/ /Volumes/ONE\\ -\\ 8TB/Dropbox/CODE/projects/collegetestplan/wp-content/uploads --existing overwrite",
+        "sync": "browser-sync start --proxy 'collegetestplan.loc' --files 'wp-content/themes/shoreditch-child/**/*' --no-notify"
+    },
+    "eslintIgnore": [
+        "index.js",
+        "dist/**/*.js",
+        "dist/*.js",
+        "node_modules/"
+    ],
+    "eslint.options": {
+        "extends": [
+            "airbnb",
+            "prettier"
+        ],
+        "rules": {
+            "no-console": 0,
+            "func-names": 0,
+            "wrap-iife": 0,
+            "spaced-comment": 0,
+            "space-before-function-paren": "off",
+            "no-var": "off",
+            "no-plusplus": "off",
+            "prefer-destructuring": "off",
+            "no-global-assign": "off",
+            "import/extensions": 0,
+            "global-require": "off",
+            "ignoreStrings": true,
+            "prettier/prettier": [
+                "error",
+                {
+                    "trailingComma": "es5",
+                    "singleQuote": true,
+                    "printWidth": 200
+                }
+            ]
+        },
+        "env": {
+            "browser": true,
+            "node": true,
+            "jquery": true
+        },
+        "parser": "babel-eslint",
+        "plugins": [
+            "prettier"
+        ]
+    },
+    "babel": {
+        "sourceMap": "inline",
+        "presets": [
+            [
+                "env",
+                {
+                    "targets": {
+                        "node": "current"
+                    }
+                }
+            ]
+        ],
+        "plugins": [
+            "transform-runtime"
+        ],
+        "minified": true
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "autoprefixer": "^9.0.2",
+        "babel-core": "^6.26.0",
+        "babel-eslint": "^8.2.6",
+        "babel-plugin-transform-async-to-generator": "^6.24.1",
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.6.1",
+        "babelify": "^8.0.0",
+        "cssnano": "^4.0.5",
+        "eslint": "^4.19.1",
+        "eslint-config-airbnb": "^16.1.0",
+        "eslint-config-prettier": "^2.10.0",
+        "eslint-plugin-import": "^2.13.0",
+        "eslint-plugin-jsx-a11y": "^6.1.1",
+        "eslint-plugin-prettier": "^2.6.2",
+        "eslint-plugin-react": "^7.10.0",
+        "grunt": "^1.0.0",
+        "grunt-contrib-sass": "^1.0.0",
+        "grunt-contrib-watch": "^1.0.0",
+        "grunt-notify": "^0.4.5",
+        "node-sass": "^4.9.2",
+        "prettier-eslint": "^8.8.2",
+        "uglifyify": "^4.0.5"
+    },
+    "dependencies": {
+        "prettier": "^1.14.2"
+    }
 }

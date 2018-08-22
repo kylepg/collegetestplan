@@ -1,0 +1,57 @@
+/*======================================
+=            PAGE - PRICING            =
+=======================================*/
+
+@import 'colors';
+
+#post-63 {
+    li {
+        margin-bottom: 10px;
+    }
+    table {
+        border: none;
+        margin-bottom: 50px;
+        font-size: 1.1rem;
+        td {
+            border-width: 0px 0px 1px 0px;
+            border-bottom: 1px solid #dddddd;
+        }
+        td:first-child {
+               color: #253968;
+        }
+    }
+    .table-lg {
+        @media (max-width: 800px) {
+            display: none;
+        }
+        tr:nth-child(3) td:first-child,
+        tr:nth-child(4) td:first-child,
+        tr:nth-child(5) td:first-child {
+            padding-left: 20px;
+            @media (max-width: 800px) {
+                padding-left: 15px;
+            }
+        }
+        td:nth-child(3) {
+            text-align: right;
+        }
+    }
+    .table-sm {
+        font-size: .8rem;
+        display: none;
+        @media (max-width: 800px) {
+            display: table;
+        }
+        tr {
+            margin-bottom: 20px;
+        }
+        td:nth-child(2) {
+            text-align: right;
+        }
+        .title {
+            border: 0;
+            padding-top: 10px;
+            font-weight: bold;
+        }
+    }
+}
