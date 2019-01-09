@@ -37,6 +37,7 @@ define('DB_CHARSET', 'utf8mb4');
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
 
+
 /**#@+
  * Authentication Unique Keys and Salts.
  *
@@ -46,14 +47,14 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         'r)*%gOXmt{@z5fq1f)Pn8O?w#]0Uw&#q[8Mn`A5m(X_#aYW;.Hw4lm{aHNBAep*O');
-define('SECURE_AUTH_KEY',  '[ !o]?4Zn+)az-&?E_?<*ZylQ]W*W%i:.mL6?B2ku:NVr`;3}~ k]|n)a)2`jp6b');
-define('LOGGED_IN_KEY',    'm[$f8)c62;tuC/ET,yY!=J?np!f4:-kgq=k{_CL4CJva UX4]:rx+@t{kv}( _Qf');
-define('NONCE_KEY',        'z3VDdY[9?U= rXtFPkF^4~^zB37}z +jKcP_>Sze#Fb.YtjCkN_oC9A/ oZfalG|');
-define('AUTH_SALT',        'f,O|TEV9=#xza4dX3As/U,Ho}^`Kr%H_QL%3YYGEMM7AU]#rC:1GcB tnTU>3RiR');
+define('AUTH_KEY', 'r)*%gOXmt{@z5fq1f)Pn8O?w#]0Uw&#q[8Mn`A5m(X_#aYW;.Hw4lm{aHNBAep*O');
+define('SECURE_AUTH_KEY', '[ !o]?4Zn+)az-&?E_?<*ZylQ]W*W%i:.mL6?B2ku:NVr`;3}~ k]|n)a)2`jp6b');
+define('LOGGED_IN_KEY', 'm[$f8)c62;tuC/ET,yY!=J?np!f4:-kgq=k{_CL4CJva UX4]:rx+@t{kv}( _Qf');
+define('NONCE_KEY', 'z3VDdY[9?U= rXtFPkF^4~^zB37}z +jKcP_>Sze#Fb.YtjCkN_oC9A/ oZfalG|');
+define('AUTH_SALT', 'f,O|TEV9=#xza4dX3As/U,Ho}^`Kr%H_QL%3YYGEMM7AU]#rC:1GcB tnTU>3RiR');
 define('SECURE_AUTH_SALT', '(+>QMf]Od0k&]iy17<SyTSR_52R#}|w5b:Gf>2nL${6s]pjxv_,rxDR9xcZ3Mzo^');
-define('LOGGED_IN_SALT',   'Jlu-4m?FG+`D|TrIfA$X_(a1]}DbJB%e0-e5O s},_y&ql-L >1L8c!DK Mlm[q#');
-define('NONCE_SALT',       '~7yBK(JI`vD0l,u!T$},;Z(tpWc+Vd5Utu3LqU<T+fbP*Kh<=SIsKrCx!N@5t0i9');
+define('LOGGED_IN_SALT', 'Jlu-4m?FG+`D|TrIfA$X_(a1]}DbJB%e0-e5O s},_y&ql-L >1L8c!DK Mlm[q#');
+define('NONCE_SALT', '~7yBK(JI`vD0l,u!T$},;Z(tpWc+Vd5Utu3LqU<T+fbP*Kh<=SIsKrCx!N@5t0i9');
 
 /**#@-*/
 
@@ -63,7 +64,7 @@ define('NONCE_SALT',       '~7yBK(JI`vD0l,u!T$},;Z(tpWc+Vd5Utu3LqU<T+fbP*Kh<=SIs
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix  = 'wp_';
+$table_prefix = 'wp_';
 
 /**
  * For developers: WordPress debugging mode.
@@ -82,8 +83,9 @@ define('WP_DEBUG', false);
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */
-if ( !defined('ABSPATH') )
-	define('ABSPATH', dirname(__FILE__) . '/');
+if (! defined('ABSPATH')) {
+    define('ABSPATH', dirname(__FILE__) . '/');
+}
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');

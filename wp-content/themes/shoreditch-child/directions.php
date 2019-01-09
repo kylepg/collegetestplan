@@ -93,8 +93,9 @@ get_header(); ?>
                                 <p> Century Suites entrance pictured below —South A G-700—is on the far right side of the building
                                     facing the pond.</p>
                             </div>
-                            <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=TradeCenter%2C%20Suite%20G-700%20Woburn%2C%20MA%2001801%20&key=AIzaSyDok1mJQ2SsLvrNImAEMhwkD2Ey9SaP9Zw"
+                            <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EiwxMDAgVHJhZGVjZW50ZXIgRHJpdmUsIFdvYnVybiwgTUEgMDE4MDEsIFVTQSIwEi4KFAoSCWtHb4QWdeOJEYD6fFLUDFScEGQqFAoSCSN3XJEWdeOJEbpUi7DmtIEh&key=AIzaSyDok1mJQ2SsLvrNImAEMhwkD2Ey9SaP9Zw"
                                 allowfullscreen></iframe>
+
                         </div>
                     </div>
                 </div>

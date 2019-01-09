@@ -334,7 +334,7 @@ get_header(); ?>
                                 </div>
                             </div>
                             <div class="offering-wrap" data-offering="academic-services">
-                                <h3>ADDITIONAL ACADEMIC SERVICES</h3>
+                                <h3>Additional Academic Services</h3>
                                 <h4>Academic Year 2018-19</h4>
                                 <div class="item-wrap">
                                     <h4><span><span>ADMISSIONS</span> MATTERS</span>
@@ -427,8 +427,8 @@ get_header(); ?>
     function updateUrlParameter(uri, key, value) {
         // remove the hash part before operating on the uri
         var i = uri.indexOf('#');
-        var hash = i === -1 ? ''  : uri.substr(i);
-            uri = i === -1 ? uri : uri.substr(0, i);
+        var hash = i === -1 ? '' : uri.substr(i);
+        uri = i === -1 ? uri : uri.substr(0, i);
 
         var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
         var separator = uri.indexOf('?') !== -1 ? "&" : "?";
@@ -437,9 +437,9 @@ get_header(); ?>
         } else {
             uri = uri + separator + key + "=" + value;
         }
-        return uri + hash;  // finally append the hash as well
+        return uri + hash; // finally append the hash as well
     }
-        if (getParameterByName('o') !== null) {
+    if (getParameterByName('o') !== null) {
         console.log('query');
         jQuery('.offering-wrap').removeClass('active');
         jQuery('.offering-wrap[data-offering="' + getParameterByName('o') + '"]').addClass('active')
@@ -448,7 +448,7 @@ get_header(); ?>
     }
     jQuery('.left li').on('click', function() {
         var offering = jQuery(this).attr('data-offering');
-        window.history.replaceState('test', 'test',`?o=${offering}`);
+        window.history.replaceState('test', 'test', `?o=${offering}`);
         jQuery(this).siblings().removeClass('active');
         jQuery(this).addClass('active');
         jQuery('.offering-wrap').removeClass('active');

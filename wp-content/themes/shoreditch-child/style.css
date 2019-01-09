@@ -4,9 +4,8 @@ Theme URI: http:/localhost;
 Description: Ya boi
 Author: Kyle George
 Author URI: N/A
-Template: Shoreditch
+Template: shoreditch
 Version: 1.0
-GitHub Theme URI: https://github.com/kylepg/collegetestplan/tree/master/wp-content/themes/shoreditch-child
 */
 @import url("../shoreditch/style.css");
 /*======================================
@@ -304,6 +303,40 @@ GitHub Theme URI: https://github.com/kylepg/collegetestplan/tree/master/wp-conte
   top: 18px;
   width: 0%;
   left: 50%; }
+
+.global-nav-wrap {
+  height: 39px;
+  width: 100%;
+  position: relative;
+  background-color: #d8d9da;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .global-nav-wrap .global-nav {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    width: 100%; }
+    .global-nav-wrap .global-nav ul {
+      text-align: right;
+      margin: 0; }
+      .global-nav-wrap .global-nav ul i {
+        transform: rotate(95deg);
+        font-size: 12px;
+        margin-right: 5px; }
+      .global-nav-wrap .global-nav ul li {
+        border-right: 1px solid #757575;
+        font-size: 14px;
+        padding: 0px 15px;
+        display: inline;
+        list-style: none; }
+        .global-nav-wrap .global-nav ul li:last-child {
+          padding-right: 0;
+          border-right: none; }
 
 /*=======================================
 =            PAGE - OFFERINGS           =

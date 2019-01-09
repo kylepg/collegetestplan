@@ -4,19 +4,18 @@ Theme URI: http:/localhost;
 Description: Ya boi
 Author: Kyle George
 Author URI: N/A
-Template: Shoreditch
+Template: shoreditch
 Version: 1.0
 */
 
 @import url("../shoreditch/style.css");
-@import 'pricing';
-@import 'directions';
-@import 'footer';
-@import 'homepage';
-@import 'header';
-@import 'offerings';
-@import 'colors';
-
+@import "pricing";
+@import "directions";
+@import "footer";
+@import "homepage";
+@import "header";
+@import "offerings";
+@import "colors";
 body {
     font-size: 1.1rem;
 }
@@ -36,16 +35,3 @@ button {
 .entry-content a {
     box-shadow: 0 0 0 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
