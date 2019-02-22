@@ -18,7 +18,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
-
+	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/solid.css" integrity="sha384-wnAC7ln+XN0UKdcPvJvtqIH3jOjs9pnKnq9qX68ImXvOGz2JuFoEiCjT8jyZQX2z" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css" integrity="sha384-HbmWTHay9psM8qyzEKPc8odH4DsOuzdejtnr+OFtDmOcIVnhgReQ4GZBH7uwcjf6" crossorigin="anonymous">
 	<?php wp_head(); ?>
 </head>
 <script>
@@ -40,9 +42,9 @@
 				<div class="global-nav">
 					<ul>
 						<li><i class="fas fa-phone"></i>(833)-728-PLAN</li>
-						<li><a href="">Contact</a></li>
-						<li><a>Location</a></li>
-						<li><a>Blog</a></li>
+						<li><a href="/contact">Contact</a></li>
+						<li><a href="/location">Location</a></li>
+						<li><a href="/blog">Blog</a></li>
 					</ul>
 				</div>
 			</div>

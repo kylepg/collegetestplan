@@ -26,8 +26,15 @@
 			<?php printf(esc_html__('Theme: %1$s by %2$s.', 'shoreditch'), 'Shoreditch', '<a href="https://wordpress.com/themes/" rel="designer">Automattic</a>'); ?>
 		</div>
 		<!-- .site-info -->
-		<p style="font-size: 16px; text-align: center;position: relative;left: 50%;transform: translate(-50%);">@ TRADECENTER 128 100 TradeCenter, Suite G-700 Woburn, MA 01801
-			<br> 617.721.5516 | prep@collegetestplan.com</p>
+
+		<p style="font-size: 16px; text-align: center;position: relative;left: 50%;transform: translate(-50%);">
+			<i class="fas fa-phone"></i>(833)-728-PLAN | prep@collegetestplan.com<br>
+			<a href="http://collegetestplan.loc/privacy-policy/">Privacy Policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="">Copyright Info</a><br>
+			<a href=""><i class="fab fa-twitter"></i></a>
+			<a href=""><i class="fab fa-facebook-square"></i></a>
+			<a href=""><i class="fab fa-linkedin"></i></a>
+			<a href=""><i class="fab fa-facebook-square"></i></a>
+		</p>
 	</div>
 	<!-- .site-footer-wrapper -->
 </footer>

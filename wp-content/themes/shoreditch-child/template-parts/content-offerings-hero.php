@@ -18,7 +18,7 @@ if ('post' !== get_post_type() && ! has_post_thumbnail() || 'post' === get_post_
 
 <div class="entry-hero" <?php shoreditch_background_image(); ?>>
 	<div class="entry-hero-wrapper">
-		<h1 style="color: #fff">Offerings</h1>
+		<h1 style="color: #fff">Test Prep</h1>
 		<p>Lorem ipsum dolor sit amet, vero mutat patrioque vis te, est ne facete singulis. Usu ex latine forensibus, te has delicata
 			argumentum.
 		</p>
