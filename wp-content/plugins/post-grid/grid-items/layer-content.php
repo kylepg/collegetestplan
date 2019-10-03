@@ -22,229 +22,244 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 		else{
 			$layout = array();
 			}
-		
-		
-		
-		
 		}
 		
+	
+	//var_dump(get_the_ID());
 
-		
-		
-
-	$html_content = '';
 
 	$html.='<div class="layer-content">';
+	
+	$active_plugins = get_option('active_plugins');
 
 	foreach($layout as $item_id=>$item_info){
+		
+		$item_key = isset($item_info['key']) ? $item_info['key'] : '';
+		//$layout_items_html = $class_post_grid_functions->layout_items_html($item_id, $item_info );
+
+		
+		
+		//var_dump($item_info);
+
 		
 		$item_key = $item_info['key'];
 		
 		if(!empty($item_info['char_limit'])){
 			$char_limit = $item_info['char_limit'];	
 			}
+		else{
+			
+			$char_limit = 10;
+			
+			}
+			
 
+		if(!empty($item_info['taxonomy'])){
+			$taxonomy = $item_info['taxonomy'];	
+			}
+		else{
+			$taxonomy = '';
+			}
+
+		if(!empty($item_info['taxonomy_term_count'])){
+			$taxonomy_term_count = $item_info['taxonomy_term_count'];	
+			}
+		else{
+			$taxonomy_term_count = '';
+			}
+			
+		//var_dump($taxonomy_term_count);
+
+
+
+		if(!empty($item_info['five_star_count'])){
+			$five_star_count = $item_info['five_star_count'];	
+			}
+		else{
+			$five_star_count = 0;
+			}			
+			
+		if(!empty($item_info['field_id'])){
+			$field_id = $item_info['field_id'];	
+			}
+		else{
+			$field_id = '';
+			}			
+			
+			//var_dump($field_id);
+			
+			
+			
+			
+			
+			
+			
+			
 			
 		if(!empty($item_info['link_target'])){
 			$link_target = $item_info['link_target'];	
 			}			
 		else{
 			$link_target = '';
-			}
-			
-			
-		
-		
-		if($item_key=='title'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			$html_content.= apply_filters('post_grid_filter_grid_item_title',wp_trim_words(get_the_title(), $char_limit,''));
-			$html_content.='</div>';
-			}
-			
-		elseif($item_key=='title_link'){
-
-				$html_content.= '<a target="'.$link_target.'" class="element element_'.$item_id.' '.$item_key.'" href="'.get_permalink().'">'.apply_filters('post_grid_filter_grid_item_title',wp_trim_words(get_the_title(), $char_limit,'')).'</a>';
-
-			}			
-			
-		elseif($item_key=='content'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			$the_content = get_the_content();
-			$html_content.= apply_filters('post_grid_filter_grid_item_content', $the_content);	
-			
-			//$html_content.= apply_filters( 'the_content', get_the_content() );
-			$html_content.='</div>';
 			}	
-			
-		elseif($item_key=='read_more'){
-	
+		
 			if(!empty($item_info['read_more_text'])){
 				$read_more_text = $item_info['read_more_text'];	
+				
+				//var_dump($read_more_text);
 				}
 			else{
-				
-					
-				
-				
+
 				$read_more_text = apply_filters('post_grid_filter_grid_item_read_more', __('Read more.', 'post-grid'));
 				
 				
-				}
+				}		
+		
+		
+		
+		
+		$item['title'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.apply_filters('post_grid_filter_grid_item_title',wp_trim_words(get_the_title($item_post_id), $char_limit,'')).'</div>';
+		
 
+		//$item['title'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.get_the_ID().'</div>';	
+		
+		$item['title_link'] = '<a target="'.$link_target.'" class="element element_'.$item_id.' '.$item_key.'" href="'.get_permalink($item_post_id).'">'.apply_filters('post_grid_filter_grid_item_title',wp_trim_words(get_the_title($item_post_id), $char_limit,'')).'</a>';	
 
-				$html_content.= '<a target="'.$link_target.'" class="element element_'.$item_id.' '.$item_key.'"  href="'.get_permalink().'">'.$read_more_text.'</a>';
+		$post_content = apply_filters('the_content', get_the_content($item_post_id));
+		
+		$item['content'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.apply_filters('post_grid_filter_grid_item_content', $post_content).'</div>';
+		
+		
+		$excerpt_removed_shortcode = preg_replace( '|\[(.+?)\](.+?\[/\\1\])?|s', '', strip_shortcodes(get_the_excerpt($item_post_id)));
 
-			}
-			
-			
-			
-		elseif($item_key=='thumb'){
-			
-			$thumb = wp_get_attachment_image_src( get_post_thumbnail_id(get_the_ID()), 'full' );
-			$thumb_url = $thumb['0'];
-	
+		$item['excerpt'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.apply_filters('post_grid_filter_grid_item_excerpt',wp_trim_words($excerpt_removed_shortcode, $char_limit,'')).'</div>';
+		
 
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			if(!empty($thumb_url)){
-				$html_content.= '<img src="'.$thumb_url.'" />';
-				}
-			$html_content.='</div>';
-			}			
-			
-		elseif($item_key=='thumb_link'){
-			
-			$thumb = wp_get_attachment_image_src( get_post_thumbnail_id(get_the_ID()), 'full' );
-			$thumb_url = $thumb['0'];
-	
-
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			
-			if(!empty($thumb_url)){
-				$html_content.= '<a href="'.get_permalink().'"><img src="'.$thumb_url.'" /></a>';
-				}
-				
-			$html_content.='</div>';
-			}			
-			
 			
 		
-			
-			
-		elseif($item_key=='excerpt'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			
-			//var_dump(get_the_excerpt());
-			$the_content = get_the_excerpt();
-			
-			$excerpt_removed_shortcode = preg_replace( '|\[(.+?)\](.+?\[/\\1\])?|s', '', strip_shortcodes($the_content));
-			
-			$html_content.= apply_filters('post_grid_filter_grid_item_excerpt',wp_trim_words($excerpt_removed_shortcode, $char_limit,''));		
+		
 
-			//$html_content.= wp_trim_words(get_the_excerpt(), $char_limit,'');
-			$html_content.='</div>';
+		$read_more_text = $read_more_text;
+
+		
+		$item['excerpt_read_more'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.wp_trim_words(strip_shortcodes(get_the_excerpt($item_post_id)), $char_limit,'').' <a target="'.$link_target.'" class="read-more" href="'.get_permalink($item_post_id).'">'.$read_more_text.'</a></div>';
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$item['read_more'] = '<a target="'.$link_target.'" class="element element_'.$item_id.' '.$item_key.'"  href="'.get_permalink($item_post_id).'">'.$read_more_text.'</a>';
+		
+		
+		$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($item_post_id), 'full' );
+		
+		if(!empty($thumb['0'])){
+			$thumb_url = $thumb['0'];
+			
+			}
+		else{
+			$thumb_url = post_grid_plugin_url.'assets/frontend/css/images/placeholder.png';
+			}
+		
+		$item['thumb'] = '<div class="element element_'.$item_id.' '.$item_key.'"  ><img src="'.$thumb_url.'" /></div>';		
+		
+		
+		
+		$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($item_post_id), 'full' );
+
+		
+		if(!empty($thumb['0'])){
+			$thumb_url = $thumb['0'];
+
+			}
+		else{
+			$thumb_url = post_grid_plugin_url.'assets/frontend/css/images/placeholder.png';
 			}
 
-			
-	
-		elseif($item_key=='excerpt_read_more'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			
-			$read_more_text = apply_filters('post_grid_filter_grid_item_read_more', __('Read more.', 'post-grid'));
-			
-			$html_content.= wp_trim_words(strip_shortcodes(get_the_excerpt()), $char_limit,'').' <a target="'.$link_target.'" class="read-more" href="'.get_permalink().'">'.$read_more_text.'</a>';
-			$html_content.='</div>';
-			}
-			
-		elseif($item_key=='post_date'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			$html_content.= apply_filters('post_grid_filter_grid_item_post_date', get_the_date());	
-			
-			//$html_content.= get_the_date();
-			$html_content.='</div>';
-			}			
-			
-		elseif($item_key=='author'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			$html_content.= apply_filters('post_grid_filter_grid_item_author', get_the_author());			
-			
-			//$html_content.= get_the_author();
-			$html_content.='</div>';
-			}	
-			
-			
-		elseif($item_key=='author_link'){
-			//$html_content.='<div   >';
-			$html_content.= '<a class="element element_'.$item_id.' '.$item_key.'" href="'.get_author_posts_url(get_the_author_meta( 'ID' ), get_the_author_meta( 'user_nicename' )).'">'.get_the_author().'</a>';			
-			//$html_content.='</div>';
-			}			
-			
-			
-			
-			
-		elseif($item_key=='categories'){
-			
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
+		
+		
+		$item['thumb_link'] = '<div class="element element_'.$item_id.' '.$item_key.'"  ><a href="'.get_permalink($item_post_id).'"><img src="'.$thumb_url.'" /></a></div>';
+		
+		
+		$item['post_date'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.apply_filters('post_grid_filter_grid_item_post_date', get_the_date()).'</div>';
+		
+		
+
+		$item['author'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.apply_filters('post_grid_filter_grid_item_author', get_the_author()).'</div>';		
+		
+
+		$item['author_link'] = '<a class="element element_'.$item_id.' '.$item_key.'" href="'.get_author_posts_url(get_the_author_meta( 'ID' ), get_the_author_meta( 'user_nicename' )).'">'.get_the_author().'</a>';		
+		
+				$html_categories = '';
 				$categories = get_the_category();
 				$separator = ' ';
 				$output = '';
 				if ( ! empty( $categories ) ) {
 					foreach( $categories as $category ) {
-						$html_content .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" title="' . esc_attr( sprintf( __( 'View all posts in %s', 'post-grid' ), $category->name ) ) . '">' . esc_html( $category->name ) . '</a>' . $separator;
+						$html_categories .= '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" title="' . esc_attr( sprintf( __( 'View all posts in %s', 'post-grid' ), $category->name ) ) . '">' . esc_html( $category->name ) . '</a>' . $separator;
+						
+	
 					}
-					$html_content.= trim( $output, $separator );
+					$html_categories.= trim( $output, $separator );
 				}
-			$html_content.='</div>';
-		}					
-			
-		elseif($item_key=='tags'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-				$posttags = get_the_tags();
-				if ($posttags) {
-				  foreach($posttags as $tag){
-					$html_content.= '<a href="#">'.$tag->name . '</a> ';
-					}
-				}
-			$html_content.='</div>';
+		
+		
+		$item['categories'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.$html_categories.'</div>';		
+		
+		
+		$html_tags = '';
+
+		$posttags = get_the_tags();
+		if ($posttags) {
+		  foreach($posttags as $tag){
+			$html_tags.= '<a href="#">'.$tag->name . '</a> ';
+			}
 		}
 		
-		elseif($item_key=='comments_count'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			
-				$comments_number = get_comments_number( get_the_ID() );
+		$item['tags'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.$html_tags.'</div>';		
+		
+		
+		if(in_array( 'rating-widget/rating-widget.php', (array) $active_plugins )){
+
+			$item['rating_widget'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.do_shortcode('[ratingwidget post_id="'.$item_post_id.'"]').'</div>';
+			}
+		else{
+			$item['rating_widget'] = '<div class="element element_'.$item_id.' '.$item_key.'"  >'.__('Please activate Rating widget Plugin','post-grid').'</div>';
+			}
 				
-				if(comments_open()){
+		
+		
+		
+
+		
+		
+	
+
 					
-					if ( $comments_number == 0 ) {
-							$html_content.= __('No Comments','post-grid');
-						} elseif ( $comments_number > 1 ) {
-							$html_content.= $comments_number . __(' Comments','post-grid');
-						} else {
-							$html_content.= __('1 Comment','post-grid');
-						}
-		
-					}
-			$html_content.='</div>';
-		}	
-		
-		
-		elseif($item_key=='comments'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			$html_content.= '<h3 class="comment-content ">'.__('Comments', 'post-grid').'</h3>';
+					
+					
+			$comments_html = '';
+			$comments_html.= '<h3 class="comment-content ">'.__('Comments', 'post-grid').'</h3>';
 			
 			
-			$comments_count =  wp_count_comments(get_the_ID());
+			$comments_count =  wp_count_comments($item_post_id);
 			$total_comments = $comments_count->approved;
 			
-			//var_dump(get_the_ID());
+			//var_dump($item_post_id);
 	
 			
 			if($total_comments <= 0)
 				{
 	
-					$html_content.= '<div class="comment no-comment">';
-					$html_content.= '<p class="comment-content ">'.__('No comments yet','post-grid').'</p>';
+					$comments_html.= '<div class="comment no-comment">';
+					$comments_html.= '<p class="comment-content ">'.__('No comments yet', 'post-grid').'</p>';
 					
-					$html_content.= '</div>';
+					$comments_html.= '</div>';
 					
 				}
 			else
@@ -252,7 +267,7 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 	
 					
 					$comments = get_comments(array(
-						'post_id' => get_the_ID(),
+						'post_id' => $item_post_id,
 						'status' => 'approve',
 						'number' => 5,				
 						'order' => 'ASC',
@@ -264,17 +279,17 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 					if(empty($comments))
 						{
 	
-							$html_content.= '<div class="comment no-more-comment">';
-							$html_content.= '<p class="comment-content ">'.__('No More comments','post-grid');
-							$html_content.= '</p>';							
-							$html_content.= '</div>';
+							$comments_html.= '<div class="comment no-more-comment">';
+							$comments_html.= '<p class="comment-content ">'.__('No more comments', 'post-grid').'';
+							$comments_html.= '</p>';							
+							$comments_html.= '</div>';
 	
 						}
 					else
 						{
 							
-							$html_content.= '<div id="comments" class="comments-area">';							
-							$html_content.= '<ol class="commentlist">';
+							$comments_html.= '<div id="comments" class="comments-area">';							
+							$comments_html.= '<ol class="commentlist">';
 							
 							foreach($comments as $comment) :
 							
@@ -288,28 +303,28 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 							
 							
 							
-								$html_content.= '<li class="comment">';
-								$html_content.= '<article id="" class="comment">';	
-								$html_content.= '<header class="comment-meta comment-author vcard">';
+								$comments_html.= '<li class="comment">';
+								$comments_html.= '<article id="" class="comment">';	
+								$comments_html.= '<header class="comment-meta comment-author vcard">';
 								
-								$html_content.= get_avatar($comment_author_email, 50);	
+								$comments_html.= get_avatar($comment_author_email, 50);	
 								
-								$html_content.= '<cite><b class="fn">'.$comment_author.'</b></cite>';								
-								$html_content.= '<time >'.$comment_date.'</time>';								
+								$comments_html.= '<cite><b class="fn">'.$comment_author.'</b></cite>';								
+								$comments_html.= '<time >'.$comment_date.'</time>';								
 																									
-								$html_content.= '</header>';								
-								$html_content.= '<section class="comment-content comment">';
-								$html_content.= '<p>'.$comment_content.'</p>';									
-								$html_content.= '</section>';															
+								$comments_html.= '</header>';								
+								$comments_html.= '<section class="comment-content comment">';
+								$comments_html.= '<p>'.$comment_content.'</p>';									
+								$comments_html.= '</section>';															
 
-								$html_content.= '</article>';								
+								$comments_html.= '</article>';								
 													
-								$html_content.= '</li>';
+								$comments_html.= '</li>';
 								
 							endforeach;
 							
-							$html_content.= '</ol>';
-							$html_content.= '</div>';							
+							$comments_html.= '</ol>';
+							$comments_html.= '</div>';							
 							
 						}
 	
@@ -318,121 +333,61 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 				
 				}
 
+		
 
-
-
-			$html_content.='</div>';
-		}		
+		$item['comments'] = '<div class="element element_'.$item_id.' '.$item_key.'">'.$comments_html.'</div>';					
 		
 		
-		elseif($item_key=='wc_full_price'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
+		
+		
+		
+
 			
-				$is_product = get_post_type( get_the_ID() );
-				$active_plugins = get_option('active_plugins');
-				if(in_array( 'woocommerce/woocommerce.php', (array) $active_plugins ) && $is_product=='product'){
-				global $woocommerce, $product;
+				$comments_number = get_comments_number( $item_post_id );
 				
-				$full_price = $product->get_price_html();
+				$comments_count_html = '';
 				
-				$html_content.=$full_price;
-				}
-			$html_content.='</div>';
-		}
-		
-			
-		elseif($item_key=='wc_add_to_cart'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			
-				$is_product = get_post_type( get_the_ID() );
-				$active_plugins = get_option('active_plugins');
-				if(in_array( 'woocommerce/woocommerce.php', (array) $active_plugins ) && $is_product=='product'){
-				global $woocommerce, $product;
-				
+				if(comments_open()){
 					
-					$add_to_cart = do_shortcode('[add_to_cart show_price="false" id="'.get_the_ID().'"]');
-					$html_content.= $add_to_cart;
 					
-				}
-			$html_content.='</div>';
-		}	
-
+					if ( $comments_number == 0 ) {
+							$comments_count_html.= __('No Comments','post-grid');
+						} elseif ( $comments_number > 1 ) {
+							$comments_count_html.= $comments_number . __(' Comments', 'post-grid');
+						} else {
+							$comments_count_html.= __('1 Comment', 'post-grid');
+						}
 		
+						$item['comments_count'] = '<div class="element element_'.$item_id.' '.$item_key.'">'.$comments_count_html.'</div>';	
 		
-		elseif($item_key=='edd_price'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
-			
-				$is_download = get_post_type( get_the_ID() );
-				$active_plugins = get_option('active_plugins');
-				if(in_array( 'easy-digital-downloads/easy-digital-downloads.php', (array) $active_plugins ) && $is_download=='download'){
-
-				
-				$edd_price = edd_price(get_the_ID(),false);
-
-				$html_content.= $edd_price;
+					}
+				else{
 					
-				}
-			$html_content.='</div>';
-		}		
+					$item['comments_count'] = '';
+					}
+		
+		
+	
+		
+		//$item = apply_filters('post_grid_filter_layout_items_html', $item_id, $item, $item_info);
+		
+		$html.= isset($item[$item_key]) ? $item[$item_key] : '';
+		
+		
+		
+		
+		
 			
-		
-		
-		elseif($item_key=='edd_add_to_cart'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
 			
-				$is_download = get_post_type( get_the_ID() );
-				$active_plugins = get_option('active_plugins');
-				if(in_array( 'easy-digital-downloads/easy-digital-downloads.php', (array) $active_plugins ) && $is_download=='download'){
-
-				$purchase_link = do_shortcode('[purchase_link id="'.get_the_ID().'" text="'.__('Add to Cart','post-grid').'" style="button"]'  );
-				$html_content.= $purchase_link;
-					
-				}
-			$html_content.='</div>';
-		}			
-		
-		
-		
-		elseif($item_key=='share_button'){
-			$html_content.='<div class="element element_'.$item_id.' '.$item_key.'"  >';
 			
-			$html_share_buttons = '';
 			
-			$html_share_buttons.= '
-			<span class="fb">
-				<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u='.get_permalink().'"> </a>
-			</span>
-			<span class="twitter">
-				<a target="_blank" href="https://twitter.com/intent/tweet?url='.get_permalink().'&text='.get_the_title().'"></a>
-			</span>
-			<span class="gplus">
-				<a target="_blank" href="https://plus.google.com/share?url='.get_permalink().'"></a>
-			</span>';
 			
-			$html_content.= apply_filters('post_grid_filter_share_buttons',$html_share_buttons);			
-
-			$html_content.='</div>';
-
-		}			
-		
-		elseif($item_key=='hr'){
-
-			$html_content.= '<hr class="element element_'.$item_id.' '.$item_key.'"  />';
-
-		}		
-		
-		else{
-			$html_content.= '';
-			}	
-		
-		
-						
-					
 			
+			
+			//$html.= $layout_items_html;
+			
+			//var_dump($item_post_id);
 
 		}
 	
-	
-	
-	$html.= apply_filters('post_grid_filter_html_content', $html_content);
 	$html.='</div>'; // .layer-content

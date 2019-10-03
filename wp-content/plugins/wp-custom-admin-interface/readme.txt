@@ -3,8 +3,8 @@ Contributors: northernbeacheswebsites
 Donate link: https://northernbeacheswebsites.com.au/product/donate-to-northern-beaches-websites/
 Tags: admin, interface, menu, menu editor, customize, toolbar, login, admin logo, admin login logo, change login logo, custom admin logo, custom code, maintenance, color scheme, admin notice, hide plugins, hide users, hide sidebars, hide meta, hide meta boxes
 Requires at least: 3.0.1
-Tested up to: 5.0.3
-Stable tag: 7.9
+Tested up to: 5.2.3
+Stable tag: 7.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,11 +59,18 @@ WP Custom Admin Interface provides an awesome and simple interface to customize 
 * Create a custom admin notice which can be displayed to select users/profiles and with an expiry date
 * Create a custom dashboard widget
 * Disable automatic updates
+* Disable plugin updates
+* Disable Gutenberg block editor
 * Export and import settings
 
 [youtube http://www.youtube.com/watch?v=bIfPaWnSUvk]
 
-We hope you enjoy WP Custom Admin Interface! If you have any feature requests feel free to make a suggestion via the help page. For any support issues please use the WordPress support page.
+We hope you enjoy WP Custom Admin Interface! For support please see the help tab in the plugin settings.
+
+= Upgrade to pro =
+Upgrade to Custom Admin Interface Pro to create multiple menus, toolbars, notices, admin/frontend code, dashboard widgets, hidden plugins, hidden metaboxes, hidden sidebars and hidden users! Easily export your settings to a file and roll back revisions of your edits. Get more settings in a new intuitive design built from the ground up.
+
+[Learn more about Custom Admin Interface Pro here](https://northernbeacheswebsites.com.au/custom-admin-interface-pro/)
 
 == Installation ==
 
@@ -87,7 +94,7 @@ There are a couple of methods for installing and setting up this plugin.
 We don't foresee such an event occuring but if you do happen to run into this you can visit: yourwebsite.com/index.php?wp-custom-admin-interface=delete-menu (replacing yourwebsite.com with your website) and this will delete all the options associated with the custom admin menu. You need to make sure you are still logged in to an admin account for this to work. If you don't have admin access you'll need to either remove the database option or delete the plugin entirely. 
 
 = Is WP Custom Admin Interface completely free =
-Yes! And there's no pro version. Woohoo!
+Yes! But for even more possibilities we recommend checking out the pro version: https://northernbeacheswebsites.com.au/custom-admin-interface-pro/
 
 = Need further help? =
 Please use the support forum to raise any issues or questions. 
@@ -108,6 +115,25 @@ Please use the support forum to raise any issues or questions.
 
 
 == Changelog ==
+
+= 7.15 =
+* Announcement of Custom Admin Interface Pro!!!
+* Admin notices are now dismissable
+
+= 7.14 =
+* Minor bug fixes
+
+= 7.13 =
+* You can now disable all plugin updates
+
+= 7.12 =
+* Minor update to fix clipboard functionality in WordPress 5.2
+
+= 7.11 =
+* Complete revamp of the support rules so I can have a life and expectations are made clear
+
+= 7.10 =
+* You can now disable the Gutenberg editor from the general settings menu
 
 = 7.9 =
 * Fixed admin toolbar saving issue
@@ -310,6 +336,25 @@ Please use the support forum to raise any issues or questions.
 * Initial launch of the plugin
 
 == Upgrade Notice ==
+
+= 7.15 =
+* Announcement of Custom Admin Interface Pro!!!
+* Admin notices are now dismissable
+
+= 7.14 =
+* Minor bug fixes
+
+= 7.13 =
+* You can now disable all plugin updates
+
+= 7.12 =
+* Minor update to fix clipboard functionality in WordPress 5.2
+
+= 7.11 =
+* Complete revamp of the support rules so I can have a life and expectations are made clear
+
+= 7.10 =
+* You can now disable the Gutenberg editor from the general settings menu
 
 = 7.9 =
 * Fixed admin toolbar saving issue

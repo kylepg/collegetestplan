@@ -12,19 +12,20 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 		
 		if($nav_top_search=='yes'){
 			
-			
-			
 			if(isset($_GET['keyword'])){
 				
 				$keyword = sanitize_text_field($_GET['keyword']);
 				}
 			
 			$html.= '<div class="nav-search">';
-			$html.= '<input grid_id="'.$post_id.'" class="search" title="'.__('Press enter to reset', 'post-grid').'" type="text"  placeholder="'.__('Start typing...', 'post-grid').'" value="'.$keyword.'">';
-			$html.= '</div>';
+			$html.= '<input grid_id="'.$post_id.'" class="search" type="text"  placeholder="'.__('Start typing...', 'post-grid').'" value="'.$keyword.'">';
+			//$html.= '<span class="submit-search">'.__('Submit', 'post-grid').'</span>';
+			$html.= '</div>';			
 			
 			}
 		
+
+			//include post_grid_plugin_dir.'/grid-items/nav-search.php';	
 
 		
 		
@@ -45,7 +46,7 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 				
 				}
 			
-			$html.= '<div class="filter filter-'.$post_id.'" data-filter="all">'.__('All', 'post-grid').'</div>';
+			$html.= '<div class="filter filter-'.$post_id.'" data-filter="all">'.$filterable_filter_all_text.'</div>';
 		
 			foreach($categories_info as $term_info)
 				{
@@ -68,6 +69,7 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 					$(function(){
 					
 						$("#post-grid-'.$post_id.'").mixItUp({
+
 				pagination: {
 					limit: '.$filterable_post_per_page.',
 					prevButtonHTML: "'.$pagination_prev_text.'",
@@ -76,6 +78,9 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 					
 
 				},
+				
+
+				
 				selectors: {
 					pagersWrapper: ".pager-list-'.$post_id.'",
 					filter: ".filter-'.$post_id.'",
@@ -88,7 +93,10 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 
 			$html .= '
 			load: {
-				filter: ".'.$active_filter.'"
+				
+					filter: document.location.hash == "" ? ".'.$active_filter.'" :
+					  ("." + document.location.hash.substring(1))
+				
 			}, ';
 
 			}
@@ -204,6 +212,56 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 		}
 
 
+
+
+
+
+
+
+
+
+
+	if($nav_top_filter=='yes'){
+		
+
+		
+		
+		
+	/*	
+		
+			$html .= '<script>
+				jQuery(document).ready(function($) {
+
+// init Isotope
+var $grid = $(".grid-items").isotope({
+	layoutMode: "masonry",
+	masonry: { 
+		isFitWidth: true 
+	  },
+	filter: ".'.$active_filter.'" 
+  
+  });
+
+
+// filter items on button click
+$(".nav-filter").on( "click", ".filter", function() {
+	
+	var filterValue = $(this).attr("data-filter");
+	$grid.isotope({ filter: filterValue });
+});			
+
+				});		
+			</script>';	
+		
+*/
+
+//var_dump($active_filter);
+
+		
+		
+		
+		}
+		
 		
 
 

@@ -1,43 +1,45 @@
 === Jetpack by WordPress.com ===
-Contributors: automattic, adamkheckler, aduth, akirk, allendav, alternatekev, andy, annezazu, apeatling, azaozz, batmoo, barry, beaulebens, blobaugh, cainm, cena, cfinke, chaselivingston, chellycat, csonnek, danielbachhuber, davoraltman, daniloercoli, designsimply, dllh, drawmyface, dsmart, dzver, ebinnion, eliorivero, enej, eoigal, erania-pinnera, ethitter, gcorne, georgestephanis, gibrown, goldsounds, hew, hugobaeta, hypertextranch, iammattthomas, iandunn, jblz, jeherve, jenhooks, jenia, jgs, jkudish, jmdodd, Joen, johnjamesjacoby, jshreve, koke, kraftbj, lancewillett, lschuyler, macmanx, martinremy, matt, matveb, mattwiebe, maverick3x6, mcsf, mdawaffe, michael-arestad, migueluy, mikeyarce, mkaz, nancythanki, nickmomrik, obenland, oskosk, pento, professor44, rachelsquirrel, rdcoll, ryancowles, richardmuscat, richardmtl, roccotripaldi, samhotchkiss, scarstocea, sdquirk, stephdau, tmoorewp, tyxla, Viper007Bond, westi, yoavf, zinigor
+Contributors: automattic, adamkheckler, aduth, akirk, allendav, alternatekev, andy, annezazu, apeatling, azaozz, batmoo, barry, beaulebens, blobaugh, cainm, cena, cfinke, chaselivingston, chellycat, clickysteve, csonnek, danielbachhuber, davoraltman, daniloercoli, designsimply, dllh, drawmyface, dsmart, dzver, ebinnion, eliorivero, enej, eoigal, erania-pinnera, ethitter, gcorne, georgestephanis, gibrown, goldsounds, hew, hugobaeta, hypertextranch, iammattthomas, iandunn, jblz, jasmussen, jeffgolenski, jeherve, jenhooks, jenia, jessefriedman, jgs, jkudish, jmdodd, joanrho, johnjamesjacoby, jshreve, keoshi, koke, kraftbj, lancewillett, lschuyler, macmanx, martinremy, matt, matveb, mattwiebe, maverick3x6, mcsf, mdawaffe, MichaelArestad, migueluy, mikeyarce, mkaz, nancythanki, nickmomrik, obenland, oskosk, pento, professor44, rachelsquirrel, rdcoll, ryancowles, richardmuscat, richardmtl, roccotripaldi, samhotchkiss, scarstocea, sdquirk, stephdau, tmoorewp, tyxla, Viper007Bond, westi, yoavf, zinigor
 Tags: Jetpack, WordPress.com, backup, security, related posts, CDN, speed, anti-spam, social sharing, SEO, video, stats
-Stable tag: 6.0
-Requires at least: 4.7
-Tested up to: 4.9
+Stable tag: 7.8
+Requires at least: 5.1
+Requires PHP: 5.6
+Tested up to: 5.2
 
 The ideal plugin for stats, related posts, search engine optimization, social sharing, protection, backups, security, and more.
 
 == Description ==
 
-Hassle-free design, marketing, and security — all in one place.
+Security, performance, and site management: the best way to WordPress is with Jetpack.
 
-= Design Services =
-Create and customize your WordPress site from start to finish. Jetpack helps you with:
+= 24/7 Site Security =
+Jetpack is your site's security detail, guarding you against brute-force attacks and unauthorized logins. Basic protection is always free, while premium plans add expanded backup and automated fixes. Jetpack's full suite of site security tools include:
 
-* Hundreds of professional themes for any kind of site
-* Intuitive and powerful customization tools
-* Unlimited and high-speed image and video content delivery network
-* Lazy image loading for a faster mobile experience
-* Integration with the official WordPress mobile apps
+* Brute-force attack protection, spam filtering, and downtime monitoring.
+* Backups of your entire site, either once daily or in real time.
+* Secure login, with optional two-factor authentication.
+* Malware scanning, code scanning, and automated threat resolution.
+* A record of every change on your site to simplify troubleshooting.
+* Fast, priority support from WordPress experts.
 
-= Marketing Services =
-Measure, promote, and earn moment from your site. Jetpack helps you with:
+= Peak Performance =
+Activate site accelerator tools and watch your page load times decrease -- we'll optimize your images and serve them from our own powerful global network, and speed up your mobile site to reduce bandwidth usage (and save money!). Connect Jetpack to take advantage of:
 
-* Site stats and analytics
-* Automated social media posting and scheduling in advance
-* Elasticsearch-powered related content and site search
-* SEO tools for Google, Bing, Twitter, Facebook, and WordPress.com
-* Advertising program that includes the best of AdSense, Facebook Ads, AOL, Amazon, Google AdX, and Yahoo
-* Simple PayPal payment buttons
+* Images and static files, like CSS and JavaScript, served from our servers, not yours.
+* Elasticsearch-powered related content and site search, for relevant results with no drain on your servers.
+* Lazy image loading for a faster mobile experience.
+* Unlimited and high-speed video via our content delivery network.
 
-= Security Services =
-Stop worrying about data loss, downtime, and hacking. Jetpack helps you with:
+= Effortless Site Management =
+Create and customize your WordPress site, optimize it for visitors and revenue, and enjoy watching your stats tick up. Built it, share it, and watch it grow with:
 
-* Brute force attack protection, spam filtering, and downtime monitoring
-* Daily or real-time backups of your entire site
-* Secure logins with optional two-factor authentication
-* Malware scanning, code scanning, and automated threat resolution
-* Fast, priority support from WordPress experts
+* Advanced site stats and analytics for understanding your audience.
+* Hundreds of professional themes, for a pro site no matter what your niche.
+* Intuitive and powerful customization tools to match your website to your brand.
+* Simple PayPal payment buttons for selling products and services.
+* SEO tools for Google, Bing, Twitter, Facebook, and WordPress.com to maximize your reach.
+* An advertising program that includes the best of AdSense, Facebook Ads, AOL, Amazon, Google AdX, and Yahoo.
+* Integration with the official WordPress mobile apps, to manage your site from anywhere.
 
 = Expert Support =
 We have a global team of Happiness Engineers ready to help you. Ask your questions in the support forum, or [contact us directly](https://jetpack.com/contact-support).
@@ -66,7 +68,7 @@ These include: [site stats](https://jetpack.com/features/traffic/site-stats), a 
 = Should I purchase a paid plan? =
 Jetpack's paid services include real-time backups, security scanning, premium themes, spam filtering, video hosting, site monetization, SEO tools, search, priority support, and more.
 
-To learn more about the essential security and WordPress services we provide, vist our [plan comparison page](https://jetpack.com/pricing?from=wporg).
+To learn more about the essential security and WordPress services we provide, visit our [plan comparison page](https://jetpack.com/pricing?from=wporg).
 
 = Why do I need a WordPress.com account? =
 
@@ -87,88 +89,48 @@ There are opportunities for developers at all levels to contribute. [Learn more 
 
 == Screenshots ==
 
-1. Dashboard: Bird’s eye view of your site stats, status, and health.
-2. Safety: Protect your site and data with powerful security services.
-3. Engagement: Social sharing, likes, and related posts.
-4. Analytics: Actionable site stats and traffic insights.
-5. Traffic: SEO Tools for Google, Twitter, Facebook and more.
+1. Keep hackers out with brute force attack protection, malware scanning, spam filtering, and downtime monitoring. Secure your site data with on-demand backups and restores.
+2. Load pages faster, and serve your images and static files from our massive global content delivery network.
+3. Customize your website with professionally-designed WordPress themes, blocks, and widgets.
+4. Promote your newest posts, pages, and products across your social media channels.
 
 == Changelog ==
 
-= 6.0 =
+= 7.8 =
 
-* Release date: April 3, 2018
-* Release post: https://wp.me/p1moTy-7xM
-
-**Major Enhancements**
-* Admin Page: Introduced a new Privacy admin page linked at the bottom of the Jetpack dashboard.
-* Admin Page: Introduced a Privacy toggle that allows the user to disable event tracking.
-* Widgets: Added new Social Icons widget and deprecated old Social Media Icons widget.
+* Release date: October 1, 2019
+* Release post: https://wp.me/p1moTy-lvE
 
 **Enhancements**
 
-* Activity Log: Started syncing comment untrashed and comment unspammed events.
-* Admin Page: Added inline module settings for plan welcome page.
-* Admin Page: Removed Javascript patterns previously used in the Admin Page that should improve performance lightly (bind pattern).
-* Admin Page: Made Jetpack Monitor setting management easier by adding a simple toggle.
-* Admin Page: Moved the button for closing the Jumpstart modal closer to the dialog so it's more visible.
-* Admin Page: Updated the "install and activate" link in the Backups card to be a functional link matching the "Set up" button.
-* Admin Page: Updated notices style to be more accessible.
-* Admin Page: We now show a link to see all plans on small screens.
-* Admin Page: Settings in Jetpack dashboard now feature contextual help and a link to learn more about it.
-* Ads: Added site id to head meta.
-* Comments: Improved accessibility of comments form by adding title attributes.
-* Connect: Removed account creation links from below the Set Up Jetpack buttons.
-* General: Show correct available status in Jetpack modules list if module is not supported by current plan.
-* General: Removed holiday snow module.
-* General: Return error in wp-cli if activating a module that is not supported by the current plan.
-* Google Translate Widget: Made sure the widget is responsive by default.
-* JITM: We now allow specifying that a jitm can be opened in a new window, or the same window.
-* JITM: We now don't use all caps for buttons text. 
-* Likes: Removed Likes from Jumpstart.
-* Likes/Sharing: Moved metabox in post editor to the right side for a better fit.
-* Masterbar: Made the Sign Out link in the Master always log you out from WordPress.com.
-* Publicize: Made styling of Publicize more consistent with wp-admin.
-* Protect: Started blocking XML RPC requests when they get marked as blocked by Protect.
-* Search: Made the Search widget available whether or not Extra Sidebar Widgets is enabled.
-* SEO Tools: Removed SEO Tools from Jumpstart
-* Shortcodes: We now load Twitters widget.js over https.
-* Subscriptions: We've made it a better experience if you try to subscribe to a site you are already subscribed to.
-* Sync: Stopped syncing personal data coming from WooCommerce orders.
-* VideoPress: Default to grid view when linking to upload videos
-* Warm Welcome: Added Search to the features listed on the Warm Welcome dialog for Professional Plan.
-* Widgets: Added rel=noopener attribute to links in the Display WordPress Posts widget if set to open in a new window.
-
+* Connection flow: remove some of the text from the connection prompt.
+* Dashboard: remove custom About menu page ordering.
+* Dashboard: review and remove unnecessary queries.
+* General: remove files that were deprecated in Jetpack 7.5.
+* General: remove outdated pre-PHP 5.6 era code.
+* Image CDN: check for local file upload before processing post images.
+* Markdown Block: display in the block picker even if the classic Markdown feature is disabled.
+* Recurring Payments: add an alignment option to the button.
+* Recurring Payments: improve the display of connection notifications.
+* Tiled Galleries: the block is now available even if you've disable the "Image Accelerator" feature.
+* WordPress.com REST API: improve detection of the Full Site Editing feature.
 
 **Improved compatibility**
 
-* bbPress: Markdown support added for bbPress CPTs.
-* PHP 7.1: Fixed an error coming from one of our json-api endpoints.
+* AMP / Sharing: include Open Graph metadata to AMP Story posts.
+* General: avoid conflicts when using Jetpack alongside other plugins or services that rely on an Autoloader.
 
 **Bug fixes**
 
-* Admin Page: Fixed Dashboard connection card from showing text that overflows the card.
-* Admin Page: Fixed directory separator character used when displaying the site URL on the disconnect dialog.
-* Admin Page: Fixed an issue by which clicking the back button on a page visited after the Admin Page would result in the Admin Page being rendered with cached data.
-* Admin Page: Don't show a Set Up button when searching for modules that are inactive in Jetpack Settings page. The Set Up button is meant for paid features coming from plugins.
-* Admin Page: Make it clear when tracking begins in the connetion dialog.
-* Admin Page: Hide the date range tabs when the initial dialog is shown.
-* Admin Page: Fixed the positioning of popovers in the Jetpack Settings page.
-* Admin Page: Fixed a bug with the Ads settings toggle.
-* Admin Page: Fixed a display issue for the custom user capability "jetpack_connect".
-* Admin Page: Made sure translations are properly applied to several phrases.
-* Connection Banner: Updated style to better fit wide screens.
-* Connection Banner: Added illustration SVGs.
-* Contact Form: Fixed width style of input for Website address.
-* Google Analytics: fix PHP notice on search pages.
-* Infinite Scroll: Fixed issues where the first was being duplicated on scroll.
-* Likes: Made manually enabled likes remain being likeable if Likes are enabled for all posts
-* Masterbar: Fixed a javascript error that would pop up with the Grammarly extension enabled on Chrome macOS.
-* Search: Added default values for the Search widget so it can be added from the Customizer.
-* Settings: Fixed overflow/overlap when there are many ignored phrases in spelling options.
-* Settings: Updated SEO/analytics links to avoid unnecessary redirects.
-* Stats: Fixed column spacing styling issues in WP Dashboard box for Jetpack stats.
-* VaultPress: Remove menu item that links nowhere when Rewind is enabled.
-* Widgets: Fixed issue with custom URL choice and selective refresh in the EU Cookie Law widget.
-* WooCommerce Analytics: Fixed PHP warning coming from str_replace usage.
-* WooCommerce Analytics: Started tracking all possible ways to add a product to a cart.
+* Activity Log: avoid displaying events from the Action Scheduler.
+* Ads Block: avoid PHP errors when loading posts via the WordPress.com interface.
+* Blocks: ensure that all blocks are properly translated when a translation is available.
+* Dashboard: do not display Plans page to non-connected admins.
+* Post Images: look for representative images in inner blocks as well.
+* Shortcodes: add title attribute to Archive.org and Archive.org Book embeds.
+* Sync: avoid issues when using deprecated Sync functions.
+* WordPress.com dashboard styles: fix layout on Plugins > Add New Page, on mobile devices.
+
+--------
+
+[See the previous changelogs here](https://raw.githubusercontent.com/Automattic/jetpack/master/changelog.txt).

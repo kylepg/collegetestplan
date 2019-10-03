@@ -1,6 +1,6 @@
 /*
- * Google Maps Widget
- * (c) Web factory Ltd, 2012 - 2018
+ * Maps Widget for Google Maps
+ * (c) Web factory Ltd, 2012 - 2019
  */
 
 
@@ -25,6 +25,11 @@ jQuery(function($) {
     return false;
   }); // open promo dialog
 
+  $('.gmw-promo-button').on('click', function(e) {
+    $('#gmw_promo_dialog').dialog('close');
+
+    return true;
+  })
 
   // init variables
   if (typeof google != 'undefined') {
@@ -289,18 +294,7 @@ jQuery(function($) {
   }); // go to PRO features click
 
 
-  // go to trial button in dialog
-  $('.gmw_goto_trial').on('click', function(e) {
-    e.preventDefault();
-
-    $('.gmw_promo_dialog_screen').hide();
-    $('#gmw_dialog_trial').show();
-
-    return false;
-  }); // go to trial click
-
-
-  // enter is pressed in license key field
+    // enter is pressed in license key field
   $('#gmw_code').on('keypress', function(e) {
     if (e.which === 13) {
       e.preventDefault();
@@ -342,62 +336,6 @@ jQuery(function($) {
 
     return false;
   }); // activate button click
-
-
-  // get trial click
-  $('#gmw_start_trial').on('click', function(e) {
-    e.preventDefault();
-
-    err = false;
-    $('#gmw_dialog_trial input.error').removeClass('error');
-    $('#gmw_dialog_trial span.error').hide();
-    $('#gmw_dialog_trial input').addClass('gmw_disabled').addClass('gmw_spinner');
-    $('#gmw_start_trial').addClass('gmw_disabled');
-
-    if ($('#gmw_name').val().length < 3) {
-      $('#gmw_name').addClass('error');
-      $('#gmw_dialog_trial span.error.name').show();
-      $('#gmw_name').focus().select();
-
-      err = true;
-    } // check name
-
-    re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test($('#gmw_email').val())) {
-      $('#gmw_email').addClass('error');
-      $('#gmw_dialog_trial span.error.email').show();
-      $('#gmw_email').focus().select();
-      return false;
-    }
-
-    if (err) {
-      return false;
-    }
-
-    $.post(ajaxurl, { 'action': 'gmw_get_trial',
-                      'name': $('#gmw_name').val(),
-                      'email': $('#gmw_email').val(),
-                      '_ajax_nonce': gmw.nonce_get_trial},
-      function(response) {
-        if (response && response.success == true) {
-          $('.before_trial').hide();
-          $('.after_trial').show();
-        } else if (response && response.success == false && response.data) {
-          alert(response.data);
-        } else {
-          alert(gmw.undocumented_error);
-        }
-      }, 'json')
-    .fail(function() {
-      alert(gmw.undocumented_error);
-    })
-    .always(function() {
-      $('#gmw_dialog_trial input').removeClass('gmw_disabled').removeClass('gmw_spinner');
-      $('#gmw_start_trial').removeClass('gmw_disabled');
-    });
-
-    return false;
-  }); // get trial click
 
 
   // open promo/activation dialog

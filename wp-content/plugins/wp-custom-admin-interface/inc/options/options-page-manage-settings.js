@@ -77,7 +77,7 @@ jQuery(document).ready(function ($) {
                 
                 $('<input style="margin-left:30px;" class="wp_custom_admin_interface_settings_input copy-settings-input" type="text" value="'+response+'"><button style="margin-left:-5px; border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important; border: 1px #fff solid !important; border-left-color:transparent !important;" class="clipboard button-secondary copy-settings-button-copy" style="cursor:pointer;" data-clipboard-text="'+response+'"><i class="fa fa-clipboard" aria-hidden="true"></i></button>').insertAfter('.copy-settings-button');
                 
-                new Clipboard('.copy-settings-button-copy');
+                new ClipboardJS('.copy-settings-button-copy');
                         
                 setTimeout(function() {
                     $('.export-success').slideUp();
@@ -94,7 +94,7 @@ jQuery(document).ready(function ($) {
     //adds copy click event to generated button
     $('.wrap').on('click', '.copy-settings-button-copy', function(event){
         event.preventDefault(); 
-        new Clipboard('.copy-settings-button-copy');
+        new ClipboardJS('.copy-settings-button-copy');
         $('.copy-settings-button-copy').text("Copied!");
         setTimeout(function() { $('.copy-settings-button-copy').html('<i class="fa fa-clipboard" aria-hidden="true"></i>'); }, 2000);
     });

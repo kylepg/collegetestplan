@@ -8,21 +8,10 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 	
 	
 	$class_post_grid_functions = new class_post_grid_functions();
-	
 	$load_more_text = $class_post_grid_functions->load_more_text();
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	$html.= '<div class="pagination '.$pagination_theme.'">';
-	
-	
-	
+
+	$html.= '<div class="pagination">';
+
 	if($max_num_pages==0){
 		
 		$max_num_pages = $wp_query->max_num_pages;
@@ -40,7 +29,6 @@ if($grid_type=='grid'){
 			$html.= '<div class="paginate">';
 
 			$big = 999999999; // need an unlikely integer
-			global $paged;
 
 			$html.= paginate_links( array(
 				'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
@@ -55,6 +43,49 @@ if($grid_type=='grid'){
 			$html.= '</div >';	
 
 		}
+		
+	elseif($pagination_type=='ajax_pagination'){
+		
+		
+			$html.= '<div grid-id="'.$post_id.'" id="paginate-ajax-'.$post_id.'" class="paginate-ajax">';
+
+			$big = 999999999; // need an unlikely integer
+
+			$html.= paginate_links( array(
+				'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+				'format' => '?paged=%#%',
+				'current' => max( 1, $paged ),
+				'total' => $max_num_pages,
+				'prev_text'          => $pagination_prev_text,
+				'next_text'          => $pagination_next_text,
+				) );
+		
+		
+			$html.= '</div >';	
+
+		}		
+		
+	elseif($pagination_type=='next_previous'){
+		
+		
+			$html.= '<div class="paginate">';
+			ob_start();
+			
+			next_posts_link( __('Older posts', 'post-grid') );
+			previous_posts_link( __('Newer posts', 'post-grid') );
+		
+			$html.= ob_get_clean();
+			$html.= '</div >';	
+
+		}		
+		
+		
+		
+		
+		
+		
+		
+		
 	elseif($pagination_type=='jquery'){
 		
 		
@@ -89,6 +120,7 @@ if($grid_type=='grid'){
 			$html .= '
 			load: {
 				filter: ".'.$active_filter.'"
+				
 			}, ';
 
 			}
@@ -128,16 +160,15 @@ if($grid_type=='grid'){
 		}
 	
 	elseif($pagination_type=='loadmore'){
-
-		global $paged;
-
-
+		
 			if(!empty($paged))
 				{
 					$paged = $paged+1;
 				}
 			
-			$html .= '<div grid_id="'.$post_id.'" class="load-more" paged="'.$paged.'" per_page="'.$posts_per_page.'" >'.$load_more_text.'</div >';
+			$load_more = "load-more-".$post_id;
+			
+			$html .= '<div id="load-more-'.$post_id.'" grid_id="'.$post_id.'" class="load-more" paged="'.$paged.'" per_page="'.$posts_per_page.'" >'.$load_more_text.'</div >';
 		
 		}
 	
@@ -150,6 +181,23 @@ if($grid_type=='grid'){
 	
 	
 	}
+	
+elseif($grid_type=='timeline'){
+	
+	if($pagination_type=='loadmore'){
+		
+			if(!empty($paged))
+				{
+					$paged = $paged+1;
+				}
+			
+			$html .= '<div grid_id="'.$post_id.'" id="load-more-'.$post_id.'" class="load-more" paged="'.$paged.'" per_page="'.$posts_per_page.'" >'.$load_more_text.'</div >';
+		
+		}
+	
+	
+	
+	}	
 	
 elseif($grid_type=='filterable'){
 	
