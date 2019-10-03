@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template part for displaying hero image on the single page.
  *
@@ -8,11 +9,11 @@
  */
 
 if (post_password_required() || is_attachment()) {
-    return;
+	return;
 }
 
-if ('post' !== get_post_type() && ! has_post_thumbnail() || 'post' === get_post_type() && ! shoreditch_has_post_thumbnail()) {
-    return;
+if ('post' !== get_post_type() && !has_post_thumbnail() || 'post' === get_post_type() && !shoreditch_has_post_thumbnail()) {
+	return;
 }
 ?>
 
@@ -36,10 +37,6 @@ if ('post' !== get_post_type() && ! has_post_thumbnail() || 'post' === get_post_
 			<button onclick="location.href='http://collegetestplan.loc/admissions-matters'" class="big-btn">
 				<i class="fas fa-school"></i>
 				<p>Admissions<br>Matters</p>
-			</button>
-			<button onclick="location.href='http://collegetestplan.loc/resources-information/'" class="big-btn">
-				<i class="fas fa-info-circle"></i>
-				<p>Resources &<br>Information</p>
 			</button>
 		</div>
 	</div>

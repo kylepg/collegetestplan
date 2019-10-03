@@ -10,12 +10,13 @@ Version: 1.0
 
 @import url("../shoreditch/style.css");
 @import "pricing";
-@import "directions";
+@import "location";
 @import "footer";
 @import "homepage";
 @import "header";
-@import "offerings";
+@import "test-prep";
 @import "colors";
+
 @media screen and (min-width: 1020px) {
     .hentry {
         padding-bottom: 4.5em;
@@ -32,7 +33,7 @@ body {
 }
 
 a {
-    font-family: Lato, sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 h1,
@@ -40,8 +41,9 @@ h2,
 h3,
 h4,
 h5 {
-    font-family: "Helvetica", sans-serif;
+    font-family: 'Lato', sans-serif;
     margin-bottom: 15px;
+    color: $primary;
 }
 
 h1 {
@@ -60,8 +62,20 @@ button {
     a {
         box-shadow: 0 0 0 0;
     }
+
     p {
-        font-family: "Lora", serif;
-        color: #666666;
+        font-family: 'Source Serif Pro', serif;
+        color: #636363;
+        line-height: 1.6;
+
+        span {
+            &.primary {
+                color: $primary;
+            }
+
+            &.secondary {
+                color: $secondary;
+            }
+        }
     }
 }

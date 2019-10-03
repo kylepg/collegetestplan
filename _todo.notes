@@ -1,0 +1,74 @@
+#=============== A ===============#
+Staging site & workflow
+
+
+#=============== B ===============#
+
+
+#=============== C ===============#
+
+
+#=============== D ===============#
+
+* PAGES *
+
+TOP NAV
+    - Contact // Full Width
+    - Location  // Location
+    - Blog // Full Width
+
+MAIN NAV
+    - SAT
+        - Private Tutoring // SAT
+        - Semi-Private Tutoring // SAT
+        - Prep Courses // SAT
+        - Essential Final Reviews // SAT
+        - Actual Conditions Exams // SAT
+    - ACT
+        - Private Tutoring // ACT
+        - Semi-Private Tutoring // ACT
+        - Prep Courses // ACT
+        - Essential Final Reviews // ACT
+        - Actual Conditions Exams // ACT
+    - Our TestPlan 
+        - Signature TestPlan // Our TestPlan
+        - Signature Plus+ TestPlan // Our TestPlan
+        - Target TestPlan // Our TestPlan
+        - Pay-As-We-Go // Our TestPlan
+    - Admissions Matters
+        - Essays that Matter // Admissions Matters
+        - College Consulting & College Selection // Admissions Matters
+
+FOOTER
+    - Privacy Policy // Full Width
+    - Copyright Info // Full Width
+
+* Templates *
+Full Width
+Our Testplan
+Admissions Matters
+SAT
+ACT
+
+#============= Notes =============#
+
+
+Under "Our TestPlan" is where we want to run the link to a single pages that lists the following info:
+    Signature TestPlan
+    Signature Plus+ TestPlan
+    Target TestPlan
+    Pay-As-We-Go
+
+Under SAT, I'd like to have the following labels/targets:
+    Private Tutoring
+    Semi-Private Tutoring
+    Prep Courses
+    Essential Final Reviews
+    Actual Conditions Exams
+
+Under ACT, I'd like to have the following labels/targets:
+    Private Tutoring
+    Semi-Private Tutoring
+    Prep Courses
+    Essential Final Reviews
+    Actual Conditions Exams
