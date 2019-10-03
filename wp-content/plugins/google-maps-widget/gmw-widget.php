@@ -1,6 +1,6 @@
 <?php
 /*
- * Google Maps Widget
+ * Maps Widget for Google Maps
  * Widget definition, admin GUI and widget rendering functions
  * (c) Web factory Ltd, 2012 - 2018
  */
@@ -35,6 +35,7 @@ class GoogleMapsWidget extends WP_Widget {
                            'thumb_format' => 'png',
                            'thumb_lang' => 'en',
                            'thumb_powered_by' => '0',
+                           'thumb_hide_title' => '0',
                            'lightbox_width' => '550',
                            'lightbox_height' => '550',
                            'lightbox_fullscreen' => '0',
@@ -52,7 +53,7 @@ class GoogleMapsWidget extends WP_Widget {
 
   // constructor - define the widget
   function __construct() {
-    $title = __('Google Maps Widget', 'google-maps-widget');
+    $title = __('Maps Widget for Google Maps', 'google-maps-widget');
 
     $widget_ops = array('classname' => 'google-maps-widget', 'description' => __('Displays a map image thumbnail with a larger map available in a lightbox.', 'google-maps-widget'), 'customize_selective_refresh' => true);
     $control_ops = array('width' => 450, 'height' => 350);
@@ -72,7 +73,8 @@ class GoogleMapsWidget extends WP_Widget {
     $thumb_map_types = array(array('val' => 'hybrid', 'label' => __('Hybrid', 'google-maps-widget')),
                              array('val' => 'roadmap', 'label' => __('Road (default)', 'google-maps-widget')),
                              array('val' => 'satellite', 'label' => __('Satellite', 'google-maps-widget')),
-                             array('val' => 'terrain', 'label' => __('Terrain', 'google-maps-widget')));
+                             array('val' => 'terrain', 'label' => __('Terrain', 'google-maps-widget')),
+                             array('val' => '-1', 'label' => __('Custom Static Image (save money on API calls)', 'google-maps-widget')));
 
     $lightbox_map_types = array(array('val' => 'roadmap', 'label' => __('Road (default)', 'google-maps-widget')),
                                 array('val' => 'satellite', 'label' => __('Satellite', 'google-maps-widget')));
@@ -153,16 +155,17 @@ class GoogleMapsWidget extends WP_Widget {
     $thumb_color_schemes = array(array('val' => 'default', 'label' => __('Default', 'google-maps-widget')),
                                  array('val' => 'new', 'label' => __('Refreshed by Google', 'google-maps-widget')),
                                  array('val' => '-1', 'label' => __('Apple', 'google-maps-widget')),
-                                 array('val' => '-1', 'label' => __('Blue', 'google-maps-widget')),
+                                 array('val' => 'blue', 'label' => __('Blue', 'google-maps-widget')),
                                  array('val' => 'bright', 'label' => __('Bright', 'google-maps-widget')),
                                  array('val' => 'gowalla', 'label' => __('Gowalla', 'google-maps-widget')),
-                                 array('val' => '-1', 'label' => __('Gray', 'google-maps-widget')),
-                                 array('val' => '-1', 'label' => __('Gray #2', 'google-maps-widget')),
+                                 array('val' => 'gray', 'label' => __('Gray', 'google-maps-widget')),
+                                 array('val' => 'gray2', 'label' => __('Gray #2', 'google-maps-widget')),
                                  array('val' => '-1', 'label' => __('Light', 'google-maps-widget')),
                                  array('val' => 'mapbox', 'label' => __('Mapbox', 'google-maps-widget')),
                                  array('val' => 'midnight', 'label' => __('Midnight', 'google-maps-widget')),
+                                 array('val' => 'neon', 'label' => __('Neon', 'google-maps-widget')),
                                  array('val' => '-1', 'label' => __('Pale', 'google-maps-widget')),
-                                 array('val' => '-1', 'label' => __('Paper', 'google-maps-widget')),
+                                 array('val' => 'paper', 'label' => __('Paper', 'google-maps-widget')),
                                  array('val' => 'ultra_light', 'label' => __('Ultra Light', 'google-maps-widget')),
                                  array('val' => '-1', 'label' => __('Custom scheme to match your site', 'google-maps-widget')));
 
@@ -174,6 +177,9 @@ class GoogleMapsWidget extends WP_Widget {
 
     $thumb_powered_bys = array(array('val' => '0', 'label' => __('No, I do not want to do that', 'google-maps-widget')),
                          array('val' => '1', 'label' => __('Please, let us show a tiny link below the map so that others can learn about GMW too', 'google-maps-widget')));
+
+    $hide_titles = array(array('val' => '0', 'label' => __('No, show the widget title (default)', 'google-maps-widget')),
+                         array('val' => '1', 'label' => __('Yes, hide the widget title', 'google-maps-widget')));
 
     $lightbox_langs = array(array('val' => 'en', 'label' => 'English'),
                             array('val' => '-1', 'label' => __('Add auto-detection and 50 more languages', 'google-maps-widget')));
@@ -199,8 +205,8 @@ class GoogleMapsWidget extends WP_Widget {
     if (GMW::is_activated()) {
       $plugin = plugin_basename(GMW_PLUGIN_DIR . GMW_BASE_FILE);
       $update_url = wp_nonce_url(admin_url('update.php?action=upgrade-plugin&amp;plugin=' . urlencode($plugin)), 'upgrade-plugin_' . $plugin );
-      echo '<p>Google Maps Widget <b class="gmw-pro-red">PRO</b> has been activated! Please <b>click the button below</b> to update plugin files to PRO version. Widget data is not lost and it will not get lost by updating.</p>';
-      echo '<p><a href="' . esc_url($update_url) . '" class="button button-primary">Update Google Maps Widget</a></p>';
+      echo '<p>Maps Widget for Google Maps <b class="gmw-pro-red">PRO</b> has been activated! Please <b>click the button below</b> to update plugin files to PRO version. Widget data is not lost and it will not get lost by updating.</p>';
+      echo '<p><a href="' . esc_url($update_url) . '" class="button button-primary">Update Maps Widget for Google Maps</a></p>';
       echo '<style type="text/css"> #widget-' . $this->id . '-savewidget { display: none; } </style>';
       echo '<input id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="hidden" value="' . esc_attr($title) . '">';
 
@@ -215,7 +221,7 @@ class GoogleMapsWidget extends WP_Widget {
     // api key warning
     if (!GMW::get_api_key('test')) {
       echo '<p class="gmw-api-key-error"><b>Important!</b> ';
-      echo 'Please go to <a href="' . admin_url('options-general.php?page=gmw_options') . '" title="Google Maps Widget settings">settings</a> &amp; follow simple instructions to get a <b>free Google Maps API key</b>. It only takes a minute. Without a key your maps will stop working. This rule is enforced by Google. Sorry for the inconvenience.</p>';
+      echo 'Please go to <a href="' . admin_url('options-general.php?page=gmw_options') . '" title="Maps Widget for Google Maps settings">settings</a> &amp; follow simple instructions to get a <b>free Google Maps API key</b>. It only takes a minute. Without a key your <b>maps will NOT work</b>. This rule is enforced by Google. Sorry for the inconvenience.</p>';
     }
 
     // widget options markup
@@ -247,7 +253,7 @@ class GoogleMapsWidget extends WP_Widget {
     echo ' px</p>';
 
     echo '<p><label class="gmw-label" for="' . $this->get_field_id('thumb_type') . '">' . __('Map Type', 'google-maps-widget') . ':</label>';
-    echo '<select data-tooltip="Controls the map layers shown. Roadmap is the most popular, hybrid combines road and satellite while terrain shows physical relief map image, displaying terrain and vegetation." id="' . $this->get_field_id('thumb_type') . '" name="' . $this->get_field_name('thumb_type') . '">';
+    echo '<select data-tooltip="Controls the map layers shown. Roadmap is the most popular, hybrid combines road and satellite while terrain shows physical relief map image, displaying terrain and vegetation.<br>Custom Static Image displays an image of your choosing in order to <b>save money</b> on Google Maps API calls. When clicked it opens the lightbox map." id="' . $this->get_field_id('thumb_type') . '" name="' . $this->get_field_name('thumb_type') . '">';
     GMW::create_select_options($thumb_map_types, $thumb_type);
     echo '</select></p>';
 
@@ -304,6 +310,11 @@ class GoogleMapsWidget extends WP_Widget {
     echo '<p><label class="gmw-label" for="' . $this->get_field_id('thumb_lang') . '">' . __('Map Language', 'google-maps-widget') . ':</label>';
     echo '<select data-tooltip="Not all map labels and texts have translations. Everything is controlled by Google at their discretion. If you choose the auto-detect mode language will be detected from the users browser settings." id="' . $this->get_field_id('thumb_lang') . '" name="' . $this->get_field_name('thumb_lang') . '">';
     GMW::create_select_options($thumb_langs, $thumb_lang);
+    echo '</select></p>';
+
+    echo '<p><label class="gmw-label" for="' . $this->get_field_id('thumb_hide_title') . '">' . __('Hide Widget Title', 'google-maps-widget') . ':</label>';
+    echo '<select data-tooltip="You can define a title for easier widgets management in admin but hide it with this option when the widget is displayed on site." id="' . $this->get_field_id('thumb_hide_title') . '" name="' . $this->get_field_name('thumb_hide_title') . '">';
+    GMW::create_select_options($hide_titles, $thumb_hide_title);
     echo '</select></p>';
 
     echo '<p><label class="gmw-label" for="' . $this->get_field_id('thumb_powered_by') . '">' . __('Show Appreciation', 'google-maps-widget') . ':</label>';
@@ -423,12 +434,12 @@ class GoogleMapsWidget extends WP_Widget {
     echo ' <a class="open_promo_dialog" href="#">Activate PRO features NOW</a>';
     echo '</p>';
     echo '<h4>' . __('Rate the plugin &amp; spread the word', 'google-maps-widget') . '</h4>';
-    echo '<p>It won\'t take you more than a minute, but it will help us immensely. So please - <a href="https://wordpress.org/support/view/plugin-reviews/google-maps-widget" target="_blank">rate the plugin</a>. Or spread the word by <a href="https://twitter.com/intent/tweet?via=WebFactoryLtd&amp;text=' . urlencode('I\'m using the #free Google Maps Widget for #wordpress. You can grab it too at http://goo.gl/2qcbbf') . '" target="_blank">tweeting about it</a>. Thank you!</p>';
+    echo '<p>It won\'t take you more than a minute, but it will help us immensely. So please - <a href="https://wordpress.org/support/view/plugin-reviews/google-maps-widget" target="_blank">rate the plugin</a>. Or spread the word by <a href="https://twitter.com/intent/tweet?via=WebFactoryLtd&amp;text=' . urlencode('I\'m using the #free Maps Widget for Google Maps for #wordpress. You can grab it too at http://goo.gl/2qcbbf') . '" target="_blank">tweeting about it</a>. Thank you!</p>';
     echo '</div>';
     // end - info tab
     echo '</div><p></p>'; // tabs
 
-    echo '<p class="widget_footer_info">' . __('Upgrade to Google Maps Widget <span class="gmw-pro-red">PRO</span> to get more than 50 extra options &amp; features available immeditely. <a class="open_promo_dialog" href="#">Upgrade now</a>.', 'google-maps-widget') . '</p>';
+    echo '<p class="widget_footer_info">' . __('Upgrade to Maps Widget for Google Maps <span class="gmw-pro-red">PRO</span> to get more than 50 extra options &amp; features available immeditely. <a class="open_promo_dialog" href="#">Upgrade now</a>.', 'google-maps-widget') . '</p>';
   } // form
 
 
@@ -459,6 +470,7 @@ class GoogleMapsWidget extends WP_Widget {
     $instance['thumb_format'] = $new_instance['thumb_format'];
     $instance['thumb_lang'] = $new_instance['thumb_lang'];
     $instance['thumb_powered_by'] = $new_instance['thumb_powered_by'];
+    $instance['thumb_hide_title'] = $new_instance['thumb_hide_title'];
 
     $instance['lightbox_fullscreen'] = (int) $new_instance['lightbox_fullscreen'];
     $instance['lightbox_width'] = min(2000, max(50, (int) $new_instance['lightbox_width']));
@@ -482,9 +494,14 @@ class GoogleMapsWidget extends WP_Widget {
   function widget($widget, $instance) {
     $options = GMW::get_options();
 
-    // no user key and installed +3 months ago -> disable map
-    if (!GMW::get_api_key('test') && ((current_time('timestamp') - $options['first_install']) > (DAY_IN_SECONDS * 90))) {
-      echo $widget['before_widget'] . '<div style="border: 1px solid black; padding: 20px;">Open your map settings to configure the Google Maps API key. The map can\'t work without it.</div>' . $widget['after_widget'];
+    // no user map key -> disable map
+    if ( !GMW::get_api_key('test') ) {
+      if ( is_user_logged_in() && current_user_can('administrator') ) {
+        echo $widget['before_widget'] . '<div style="border: 1px solid black; padding: 20px;">Open <a href="' . admin_url('options-general.php?page=gmw_options') . '">Maps Widget for Google Maps settings</a> to configure the Google Maps API key. The map can\'t work without it. This is a Google\'s rule that all sites must follow.</div>' . $widget['after_widget'];
+      } else {
+        echo $widget['before_widget'] . '<div style="border: 1px solid black; padding: 20px;">Open Maps Widget for Google Maps settings to configure the Google Maps API key. The map can\'t work without it. This is a Google\'s rule that all sites must follow.</div>' . $widget['after_widget'];
+      }
+
       return;
     }
 
@@ -497,7 +514,12 @@ class GoogleMapsWidget extends WP_Widget {
     'gowalla' => 'style=feature:road|element:labels|visibility:simplified|lightness:20|&style=feature:administrative.land_parcel|element:all|visibility:off|&style=feature:landscape.man_made|element:all|visibility:off|&style=feature:transit|element:all|visibility:off|&style=feature:road.local|element:labels|visibility:simplified|&style=feature:road.local|element:geometry|visibility:simplified|&style=feature:road.highway|element:labels|visibility:simplified|&style=feature:poi|element:labels|visibility:off|&style=feature:road.arterial|element:labels|visibility:off|&style=feature:water|element:all|hue:0xa1cdfc|saturation:30|lightness:49|&style=feature:road.highway|element:geometry|hue:0xf49935|&style=feature:road.arterial|element:geometry|hue:0xfad959|',
     'mapbox' => 'style=feature:water|element:all|saturation:43|lightness:-11|hue:0x0088ff|&style=feature:road|element:geometry.fill|hue:0xff0000|saturation:-100|lightness:99|&style=feature:road|element:geometry.stroke|color:0x808080|lightness:54|&style=feature:landscape.man_made|element:geometry.fill|color:0xece2d9|&style=feature:poi.park|element:geometry.fill|color:0xccdca1|&style=feature:road|element:labels.text.fill|color:0x767676|&style=feature:road|element:labels.text.stroke|color:0xffffff|&style=feature:poi|element:all|visibility:off|&style=feature:landscape.natural|element:geometry.fill|visibility:on|color:0xb8cb93|&style=feature:poi.park|element:all|visibility:on|&style=feature:poi.sports_complex|element:all|visibility:on|&style=feature:poi.medical|element:all|visibility:on|&style=feature:poi.business|element:all|visibility:simplified|',
     'bright' => 'style=feature:water|element:all|color:0x19a0d8|&style=feature:administrative|element:labels.text.stroke|color:0xffffff|weight:6|&style=feature:administrative|element:labels.text.fill|color:0xe85113|&style=feature:road.highway|element:geometry.stroke|color:0xefe9e4|lightness:-40|&style=feature:road.arterial|element:geometry.stroke|color:0xefe9e4|lightness:-20|&style=feature:road|element:labels.text.stroke|lightness:100|&style=feature:road|element:labels.text.fill|lightness:-100|&style=&style=feature:landscape|element:labels|visibility:off|&style=feature:landscape|element:all|lightness:20|color:0xefe9e4|&style=feature:landscape.man_made|element:all|visibility:off|&style=feature:water|element:labels.text.stroke|lightness:100|&style=feature:water|element:labels.text.fill|lightness:-100|&style=feature:poi|element:labels.text.fill|hue:0x11ff00|&style=feature:poi|element:labels.text.stroke|lightness:100|&style=feature:poi|element:labels.icon|hue:0x4cff00|saturation:58|&style=feature:poi|element:geometry|visibility:on|color:0xf0e4d3|&style=feature:road.highway|element:geometry.fill|color:0xefe9e4|lightness:-25|&style=feature:road.arterial|element:geometry.fill|color:0xefe9e4|lightness:-10|&style=feature:poi|element:labels|visibility:simplified|',
-    'midnight' => 'style=feature:water|element:all|color:0x021019|&style=feature:landscape|element:all|color:0x08304b|&style=feature:poi|element:geometry|color:0x0c4152|lightness:5|&style=feature:road.highway|element:geometry.fill|color:0x000000|&style=feature:road.highway|element:geometry.stroke|color:0x0b434f|lightness:25|&style=feature:road.arterial|element:geometry.fill|color:0x000000|&style=feature:road.arterial|element:geometry.stroke|color:0x0b3d51|lightness:16|&style=feature:road.local|element:geometry|color:0x000000|&style=feature:all|element:labels.text.fill|color:0xffffff|&style=feature:all|element:labels.text.stroke|color:0x000000|lightness:13|&style=feature:transit|element:all|color:0x146474|&style=feature:administrative|element:geometry.fill|color:0x000000|&style=feature:administrative|element:geometry.stroke|color:0x144b53|lightness:14|weight:1.4|');
+    'midnight' => 'style=feature:water|element:all|color:0x021019|&style=feature:landscape|element:all|color:0x08304b|&style=feature:poi|element:geometry|color:0x0c4152|lightness:5|&style=feature:road.highway|element:geometry.fill|color:0x000000|&style=feature:road.highway|element:geometry.stroke|color:0x0b434f|lightness:25|&style=feature:road.arterial|element:geometry.fill|color:0x000000|&style=feature:road.arterial|element:geometry.stroke|color:0x0b3d51|lightness:16|&style=feature:road.local|element:geometry|color:0x000000|&style=feature:all|element:labels.text.fill|color:0xffffff|&style=feature:all|element:labels.text.stroke|color:0x000000|lightness:13|&style=feature:transit|element:all|color:0x146474|&style=feature:administrative|element:geometry.fill|color:0x000000|&style=feature:administrative|element:geometry.stroke|color:0x144b53|lightness:14|weight:1.4|',
+    'neon' => 'style=saturation:100|gamma:0.6',
+    'gray' => 'style=feature:landscape|element:all|saturation:-100|lightness:65|visibility:on|&style=feature:poi|element:all|saturation:-100|lightness:51|visibility:simplified|&style=feature:road.highway|element:all|saturation:-100|visibility:simplified|&style=feature:road.arterial|element:all|saturation:-100|lightness:30|visibility:on|&style=feature:road.local|element:all|saturation:-100|lightness:40|visibility:on|&style=feature:transit|element:all|saturation:-100|visibility:simplified|&style=feature:administrative.province|element:all|visibility:off|&style=feature:water|element:labels|visibility:on|lightness:-25|saturation:-100|&style=feature:water|element:geometry|hue:0xffff00|lightness:-25|saturation:-97|',
+    'blue' => 'style=feature:water|element:all|color:0x46bcec|visibility:on|&style=feature:landscape|element:all|color:0xf2f2f2|&style=feature:road|element:all|saturation:-100|lightness:45|&style=feature:road.highway|element:all|visibility:simplified|&style=feature:road.arterial|element:labels.icon|visibility:off|&style=feature:administrative|element:labels.text.fill|color:0x444444|&style=feature:transit|element:all|visibility:off|&style=feature:poi|element:all|visibility:off|',
+    'gray2' => 'style=feature:all|element:all|saturation:-100|gamma:0.5|',
+    'paper' => 'style=feature:landscape|element:all|hue:0xF1FF00|saturation:-27.4|lightness:9.4|gamma:1|&style=feature:road.highway|element:all|hue:0x0099FF|saturation:-20|lightness:36.4|gamma:1|&style=feature:road.arterial|element:all|hue:0x00FF4F|saturation:0|lightness:0|gamma:1|&style=feature:road.local|element:all|hue:0xFFB300|saturation:-38|lightness:11.2|gamma:1|&style=feature:water|element:all|hue:0x00B6FF|saturation:4.2|lightness:-63.4|gamma:1|&style=feature:poi|element:all|hue:0x9FFF00|saturation:0|lightness:0|gamma:1|');
 
     $map_src = '//maps.googleapis.com/maps/api/staticmap';
 
@@ -538,7 +560,7 @@ class GoogleMapsWidget extends WP_Widget {
 
     // add widget title; respect sidebar markup
     $title = empty($instance['title'])? '' : apply_filters('widget_title', $instance['title']);
-    if (!empty($title)) {
+    if (!empty($title) && empty($instance['thumb_hide_title'])) {
       $out .= $widget['before_title'] . $title . $widget['after_title'];
     }
 
@@ -592,7 +614,7 @@ class GoogleMapsWidget extends WP_Widget {
     }
 
     if (!empty($instance['thumb_powered_by'])) {
-      $widget_content .= '<small>We use the fastests <a href="https://wordpress.org/plugins/google-maps-widget/" target="_blank">free maps plugin for WordPress</a></small>';
+      $widget_content .= '<small>We use the fastests <a href="https://wordpress.org/plugins/google-maps-widget/" target="_blank">free Google Maps plugin for WordPress</a></small>';
     }
 
     $out .= apply_filters('gmw_widget_content', $widget_content, $instance);

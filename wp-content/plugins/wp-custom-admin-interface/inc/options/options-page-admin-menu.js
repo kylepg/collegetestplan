@@ -417,7 +417,7 @@ jQuery(document).ready(function ($) {
             
         } else {
         
-            new Clipboard('#advanced-menu-functionality');
+            new ClipboardJS('#advanced-menu-functionality');
 
             var confirmation = confirm('With great power comes great responsibility! With this option enabled you have the potential to do edits on the default WordPress menu options. But this also means that you may not be able to find your way back here if you start hiding all the standard menus! As a precaution we have copied an emergency URL to your clipboard. So if you get stuck just paste this into the browser and all settings related to this custom admin menu will be deleted so you can start again. This URL can also be found in the FAQ section of the Wordpress plugin website.');    
 

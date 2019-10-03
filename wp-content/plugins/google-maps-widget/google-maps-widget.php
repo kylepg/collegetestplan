@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name: Google Maps Widget
-Plugin URI: http://www.gmapswidget.com/
-Description: Display a single image super-fast loading Google map in a widget. A larger, full featured map is available in a lightbox. Includes a user-friendly interface and numerous appearance options.
+Plugin Name: Maps Widget for Google Maps
+Plugin URI: https://www.gmapswidget.com/
+Description: Display a single image super-fast loading Google Map in a widget. A larger, full featured map is available in a lightbox. Includes a user-friendly interface and numerous appearance options.
 Author: WebFactory Ltd
-Version: 3.90
-Author URI: http://www.webfactoryltd.com/
+Version: 4.17
+Author URI: https://www.gmapswidget.com/
 Text Domain: google-maps-widget
 Domain Path: lang
 
-  Copyright 2012 - 2018  Web factory Ltd  (email : gmw@webfactoryltd.com)
+  Copyright 2012 - 2019  Web factory Ltd  (email : gmw@webfactoryltd.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License, version 2, as
@@ -28,7 +28,7 @@ Domain Path: lang
 
 // this is an include only WP file
 if (!defined('ABSPATH')) {
-  die;
+  wp_die('Do not load this file directly.');
 }
 
 
@@ -38,7 +38,6 @@ define('GMW_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('GMW_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('GMW_BASE_FILE', basename(__FILE__));
 
-require_once GMW_PLUGIN_DIR . 'gmw-tracking.php';
 require_once GMW_PLUGIN_DIR . 'gmw-widget.php';
 
 class GMW {
@@ -83,7 +82,6 @@ class GMW {
 
       // register AJAX endpoints
       add_action('wp_ajax_gmw_test_api_key', array('GMW', 'test_api_key_ajax'));
-      add_action('wp_ajax_gmw_get_trial', array('GMW', 'get_trial_ajax'));
       add_action('wp_ajax_gmw_activate', array('GMW', 'activate_license_key_ajax'));
       add_action('wp_ajax_gmw_dismiss_pointer', array('GMW', 'dismiss_pointer_ajax'));
 
@@ -99,14 +97,12 @@ class GMW {
       // display various notices
       add_action('current_screen', array('GMW', 'add_notices'));
 
+      add_filter('install_plugins_table_api_args_featured', array('GMW', 'featured_plugins_tab'));
     } else {
       // enqueue frontend scripts
       add_action('wp_enqueue_scripts', array('GMW', 'register_scripts'));
       add_action('wp_footer', array('GMW', 'dialogs_markup'));
     }
-
-    // track plugin usage
-    GMW_tracking::init();
   } // init
 
 
@@ -115,7 +111,6 @@ class GMW {
     GMW::get_plugin_version();
 
     load_plugin_textdomain('google-maps-widget', false, basename(dirname(__FILE__)) . '/lang');
-    add_filter('cron_schedules', array('GMW_tracking', 'register_cron_intervals'));
   } // plugins_loaded
 
 
@@ -202,8 +197,8 @@ class GMW {
 
   // add widgets link to plugins page
   static function plugin_action_links($links) {
-    $settings_link = '<a href="' . admin_url('options-general.php?page=gmw_options') . '" title="' . __('Settings for Google Maps Widget', 'google-maps-widget') . '">' . __('Settings', 'google-maps-widget') . '</a>';
-    $widgets_link = '<a href="' . admin_url('widgets.php') . '" title="' . __('Configure Google Maps Widget for your theme', 'google-maps-widget') . '">' . __('Widgets', 'google-maps-widget') . '</a>';
+    $settings_link = '<a href="' . admin_url('options-general.php?page=gmw_options') . '" title="' . __('Settings for Maps Widget for Google Maps', 'google-maps-widget') . '">' . __('Settings', 'google-maps-widget') . '</a>';
+    $widgets_link = '<a href="' . admin_url('widgets.php') . '" title="' . __('Configure Maps Widget for Google Maps for your theme', 'google-maps-widget') . '">' . __('Widgets', 'google-maps-widget') . '</a>';
 
     array_unshift($links, $settings_link);
     array_unshift($links, $widgets_link);
@@ -214,7 +209,7 @@ class GMW {
 
   // add links to plugin's description in plugins table
   static function plugin_meta_links($links, $file) {
-    $documentation_link = '<a target="_blank" href="http://www.gmapswidget.com/documentation/" title="' . __('View Google Maps Widget documentation', 'google-maps-widget') . '">'. __('Documentation', 'google-maps-widget') . '</a>';
+    $documentation_link = '<a target="_blank" href="http://www.gmapswidget.com/documentation/" title="' . __('View Maps Widget for Google Maps documentation', 'google-maps-widget') . '">'. __('Documentation', 'google-maps-widget') . '</a>';
     $support_link = '<a target="_blank" href="http://wordpress.org/support/plugin/google-maps-widget" title="' . __('Problems? We are here to help!', 'google-maps-widget') . '">' . __('Support', 'google-maps-widget') . '</a>';
     $review_link = '<a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/google-maps-widget?filter=5#pages" title="' . __('If you like it, please review the plugin', 'google-maps-widget') . '">' . __('Review the plugin', 'google-maps-widget') . '</a>';
     $activate_link = '<a href="' . esc_url(admin_url('options-general.php?page=gmw_options&gmw_open_promo_dialog')) . '">' . __('Activate PRO features', 'google-maps-widget') . '</a>';
@@ -245,7 +240,7 @@ class GMW {
 
   // display error message if WP version is too low
   static function notice_min_version_error() {
-    echo '<div class="error"><p>' . sprintf(__('Google Maps Widget <b>requires WordPress version 4.0</b> or higher to function properly. You are using WordPress version %s. Please <a href="%s">update it</a>.', 'google-maps-widget'), get_bloginfo('version'), admin_url('update-core.php')) . '</p></div>';
+    echo '<div class="error"><p>' . sprintf(__('Maps Widget for Google Maps <b>requires WordPress version 4.0</b> or higher to function properly. You are using WordPress version %s. Please <a href="%s">update it</a>.', 'google-maps-widget'), get_bloginfo('version'), admin_url('update-core.php')) . '</p></div>';
   } // notice_min_version_error
 
 
@@ -273,11 +268,15 @@ class GMW {
       return false;
     }
 
+    if ($type == 'fallback' && empty($options['api_key'])) {
+      shuffle($default_api_keys);
+      return $default_api_keys[0];
+    }
+
     if (!empty($options['api_key'])) {
       return $options['api_key'];
     } else {
-      shuffle($default_api_keys);
-      return $default_api_keys[0];
+      return false;
     }
   } // get_api_key
 
@@ -288,7 +287,7 @@ class GMW {
 
     $msg = '';
     $error = false;
-    $api_key = trim(@$_GET['api_key']);
+    $api_key = substr(sanitize_key(@$_GET['api_key']), 0, 128);
 
     $test = wp_remote_get(esc_url_raw('https://maps.googleapis.com/maps/api/staticmap?center=new+york+usa&size=100x100&key=' . $api_key));
     if (wp_remote_retrieve_response_message($test) == 'OK') {
@@ -322,7 +321,7 @@ class GMW {
 
     if ($widget['lightbox_mode'] == 'place') {
       $map_params['q'] = $widget['address'];
-      $map_params['attribution_source'] = get_bloginfo('name')? get_bloginfo('name'): 'Google Maps Widget';
+      $map_params['attribution_source'] = get_bloginfo('name')? get_bloginfo('name'): 'Maps Widget for Google Maps';
       $map_params['attribution_web_url'] = get_home_url();
       $map_params['attribution_ios_deep_link_id'] = 'comgooglemaps://?daddr=' . $widget['address'];
       $map_params['maptype'] = $widget['lightbox_map_type'];
@@ -462,7 +461,7 @@ class GMW {
 
   // add plugin menus
   static function add_menus() {
-    $title = __('Google Maps Widget', 'google-maps-widget');
+    $title = __('Maps Widget for Google Maps', 'google-maps-widget');
     add_options_page($title, $title, 'manage_options', GMW::$options, array('GMW', 'settings_screen'));
   } // add_menus
 
@@ -470,27 +469,29 @@ class GMW {
   // handle dismiss button for notices
   static function dismiss_notice() {
     if (empty($_GET['notice'])) {
-      wp_redirect(admin_url());
+      wp_safe_redirect(admin_url());
       exit;
     }
 
-    if ($_GET['notice'] == 'upgrade') {
+    $notice_name = substr(sanitize_key($_GET['notice']), 0, 32);
+
+    if ($notice_name == 'upgrade') {
       GMW::set_options(array('dismiss_notice_upgrade2' => true));
-    }
-    if ($_GET['notice'] == 'rate') {
+    } elseif ($notice_name == 'rate') {
       GMW::set_options(array('dismiss_notice_rate' => true));
-    }
-    if ($_GET['notice'] == 'api_key') {
+    } elseif ($notice_name == 'api_key') {
       GMW::set_options(array('dismiss_notice_api_key' => true));
-    }
-    if ($_GET['notice'] == 'olduser') {
+    } elseif ($notice_name == 'olduser') {
       GMW::set_options(array('dismiss_notice_olduser' => true));
+    } else {
+      wp_safe_redirect(admin_url());
+      exit;
     }
 
     if (!empty($_GET['redirect'])) {
-      wp_redirect($_GET['redirect']);
+      wp_safe_redirect(esc_url($_GET['redirect']));
     } else {
-      wp_redirect(admin_url());
+      wp_safe_redirect(admin_url());
     }
 
     exit;
@@ -518,20 +519,11 @@ class GMW {
 
     // rating notification is shown after 7 days if you have active widgets
     if (!$notice && empty($options['dismiss_notice_rate']) &&
-        GMW_tracking::count_active_widgets() > 0 &&
+        self::count_active_widgets() > 0 &&
         (current_time('timestamp') - $options['first_install']) > (DAY_IN_SECONDS * 3)) {
       add_action('admin_notices', array('GMW', 'notice_rate_plugin'));
       $notice = true;
     } // show rate notice
-
-    // tracking notification is shown after 20 days
-    // disabled - will be completely removed soon
-    if (false && !$notice && !isset($options['allow_tracking']) &&
-        GMW::is_plugin_admin_page('widgets') &&
-        ((current_time('timestamp') - $options['first_install']) > (DAY_IN_SECONDS * 20))) {
-      add_action('admin_notices', array('GMW_tracking', 'tracking_notice'));
-      $notice = true;
-    } // show tracking notice
 
     // upsell to old users
     if (!$notice && empty($options['dismiss_notice_olduser']) &&
@@ -549,7 +541,7 @@ class GMW {
     $activate_url = admin_url('options-general.php?page=gmw_options&gmw_open_promo_dialog');
     $dismiss_url = add_query_arg(array('action' => 'gmw_dismiss_notice', 'notice' => 'upgrade', 'redirect' => urlencode($_SERVER['REQUEST_URI'])), admin_url('admin.php'));
 
-    echo '<div id="gmw_activate_notice" class="updated notice"><p>' . __('<b>Google Maps Widget <span style="color: #d54e21;">PRO</span></b> has more than 50 extra features &amp; options. Our support is super fast &amp; friendly and with the unlimited license you can install GMW on as many sites as you need.</p>', 'google-maps-widget');
+    echo '<div id="gmw_activate_notice" class="updated notice"><p>' . __('<b>Maps Widget for Google Maps <span style="color: #d54e21;">PRO</span></b> has more than 50 extra features &amp; options. Our support is super fast &amp; friendly and with the unlimited license you can install GMW on as many sites as you need.</p>', 'google-maps-widget');
 
     if (current_time('timestamp') - $options['first_install'] < $promo_delta) {
       $delta = $options['first_install_gmt'] + $promo_delta - time();
@@ -578,7 +570,7 @@ class GMW {
     $dismiss_url = add_query_arg(array('action' => 'gmw_dismiss_notice', 'notice' => 'olduser', 'redirect' => urlencode($_SERVER['REQUEST_URI'])), admin_url('admin.php'));
 
     echo '<div class="updated notice">';
-    echo '<p style="font-size: 14px;">We have a <a class="open_promo_dialog" href="' . $activate_url . '">special offer</a> only for users like <b>you</b> who\'ve been using Google Maps Widget for a while: a <b>one time payment</b>, lifetime license for <b>only $29</b>! No nonsense!<br><a class="open_promo_dialog" href="' . $activate_url . '">Upgrade now</a> to <span class="gmw-pro-red">PRO</span> &amp; get more than 50 extra options &amp; features. License is valid for 3 sites.</p><br>';
+    echo '<p style="font-size: 14px;">We have a <a class="open_promo_dialog" href="' . $activate_url . '">special offer</a> only for users like <b>you</b> who\'ve been using Maps Widget for Google Maps for a while: a <b>one time payment</b>, lifetime license for <b>only $29</b>! No nonsense!<br><a class="open_promo_dialog" href="' . $activate_url . '">Upgrade now</a> to <span class="gmw-pro-red">PRO</span> &amp; get more than 50 extra options &amp; features. License is valid for 3 sites.</p><br>';
 
     echo '<a class="open_promo_dialog button button-primary" href="' . $activate_url . '"><b>Grab the limited offer!</b></a>&nbsp;&nbsp;<a href="' . esc_url($dismiss_url) . '" style="margin: 3px 0 0 5px; display: inline-block;">' . __('I\'m not interested (remove notice)', 'google-maps-widget') . '</a>';
     echo '</p></div>';
@@ -590,7 +582,7 @@ class GMW {
     $rate_url = 'https://wordpress.org/support/view/plugin-reviews/google-maps-widget?rate=5#postform';
     $dismiss_url = add_query_arg(array('action' => 'gmw_dismiss_notice', 'notice' => 'rate', 'redirect' => urlencode($_SERVER['REQUEST_URI'])), admin_url('admin.php'));
 
-    echo '<div id="gmw_rate_notice" class="updated notice"><p>' . __('Hi! We saw you\'ve been using <b>Google Maps Widget</b> for a week and wanted to ask for your help to make the plugin better.<br>We just need a minute of your time to rate the plugin. Thank you!', 'google-maps-widget');
+    echo '<div id="gmw_rate_notice" class="updated notice"><p>' . __('Hi! We saw you\'ve been using <b>Maps Widget for Google Maps</b> for a week and wanted to ask for your help to make the plugin better.<br>We just need a minute of your time to rate the plugin. Thank you!', 'google-maps-widget');
 
     echo '<br><a target="_blank" href="' . esc_url($rate_url) . '" style="vertical-align: baseline; margin-top: 15px;" class="button-primary">' . __('Help make the plugin better by rating it', 'google-maps-widget') . '</a>';
     echo '&nbsp;&nbsp;<a href="' . esc_url($dismiss_url) . '">' . __('I already rated the plugin', 'google-maps-widget') . '</a>';
@@ -621,9 +613,9 @@ class GMW {
     $js_localize = array('dialog_map_title' => __('Pick an address by drag &amp; dropping the pin', 'google-maps-widget'),
                          'undocumented_error' => __('An undocumented error has occured. Please refresh the page and try again.', 'google-maps-widget'),
                          'bad_api_key' => __('The API key format does not look right. Please double-check it.', 'google-maps-widget'),
-                         'dialog_promo_title' => '<img alt="' . __('Google Maps Widget PRO', 'google-maps-widget') . '" title="' . __('Google Maps Widget PRO', 'google-maps-widget') . '" src="' . GMW_PLUGIN_URL . 'images/gmw-logo-pro-dialog.png' . '">',
+                         'dialog_promo_title' => '<img alt="' . __('Maps Widget for Google Maps PRO', 'google-maps-widget') . '" title="' . __('Maps Widget for Google Maps PRO', 'google-maps-widget') . '" src="' . GMW_PLUGIN_URL . 'images/gmw-logo-pro-dialog.png' . '">',
                          'dialog_pins_title' => __('Pins Library', 'google-maps-widget'),
-                         'plugin_name' => __('Google Maps Widget', 'google-maps-widget'),
+                         'plugin_name' => __('Maps Widget for Google Maps', 'google-maps-widget'),
                          'id_base' => 'googlemapswidget',
                          'map_picker_not_active' => __('Drag&drop address picking interface is a PRO feature. Interested in switching to PRO?', 'google-maps-widget'),
                          'customizer_address_picker' => __('At the moment, the address picker is not available in the theme customizer. Please use it in the admin widget GUI.', 'google-maps-widget'),
@@ -633,8 +625,7 @@ class GMW {
                          'settings_url' => admin_url('options-general.php?page=gmw_options'),
                          'nonce_test_api_key' => wp_create_nonce('gmw_test_api_key'),
                          'nonce_activate_license_key' => wp_create_nonce('gmw_activate_license_key'),
-                         'nonce_get_trial' => wp_create_nonce('gmw_get_trial'),
-                         'deactivate_confirmation' => __('Are you sure you want to deactivate Google Maps Widget?' . "\n" . 'All maps will be removed from the site. If you are removing it because of a problem please contact our support. They will be more than glad to help.', 'google-maps-widget'));
+                         'deactivate_confirmation' => __('Are you sure you want to deactivate Maps Widget for Google Maps?' . "\n" . 'All maps will be removed from the site. If you are removing it because of a problem please contact our support. They will be more than glad to help.', 'google-maps-widget'));
 
     if (GMW::is_plugin_admin_page('widgets') || GMW::is_plugin_admin_page('settings') || is_customize_preview()) {
       wp_enqueue_script('jquery-ui-tabs');
@@ -690,7 +681,7 @@ class GMW {
   // reset all pointers to default state - visible
   static function reset_pointers() {
     $pointers = array();
-    $pointers['welcome'] = array('target' => '#menu-appearance', 'edge' => 'left', 'align' => 'right', 'content' => 'Thank you for installing <b>Google Maps Widget</b>! Please open <a href="' . admin_url('widgets.php'). '">Appearance - Widgets</a> to create your first map in seconds.');
+    $pointers['welcome'] = array('target' => '#menu-appearance', 'edge' => 'left', 'align' => 'right', 'content' => 'Thank you for installing <b>Maps Widget for Google Maps</b>! Please open <a href="' . admin_url('widgets.php'). '">Appearance - Widgets</a> to create your first map in seconds.');
 
     set_transient('gmw_pointers', $pointers, 60 * DAY_IN_SECONDS);
   } // reset_pointers
@@ -701,7 +692,8 @@ class GMW {
     check_ajax_referer('gmw_dismiss_pointer');
 
     $pointers = get_transient('gmw_pointers');
-    $pointer = trim($_POST['pointer']);
+
+    $pointer = substr(sanitize_key(@$_POST['pointer']), 0, 64);
 
     if (empty($pointers) || empty($pointers[$pointer])) {
       wp_send_json_error();
@@ -841,23 +833,23 @@ class GMW {
       $out .= '<tr>';
       $out .= '<td>';
       if ($promo_active) {
-        $out .= '<div class="gmw-promo-button gmw-promo-button-extra"><a href="http://www.gmapswidget.com/buy/?p=pro-agency-welcome&r=welcome-GMW+v' . GMW::$version . '" target="_blank">only <strike>$79</strike> $54</a><span>discount: 32%</span></div>';
+        $out .= '<div class="gmw-promo-button gmw-promo-button-extra"><a href="https://gum.co/gmw-pro-agency/welcome?wanted=true&plugin_info=GMW+v' . GMW::$version . '" target="_blank" data-gumroad-single-product="true">only <strike>$79</strike> $54</a><span>discount: 32%</span></div>';
       } else {
-        $out .= '<div class="gmw-promo-button"><a href="http://www.gmapswidget.com/buy/?p=pro-agency&r=GMW+v' . GMW::$version . '" data-noprevent="1" target="_blank">BUY $79</a></div>';
+        $out .= '<div class="gmw-promo-button"><a href="https://gum.co/gmw-pro-agency?wanted=true&plugin_info=GMW+v' . GMW::$version . '" data-noprevent="1" target="_blank" data-gumroad-single-product="true">BUY $79</a></div>';
       }
       $out .= '<span class="instant-download"><span class="dashicons dashicons-yes"></span> 100% No-Risk Money Back Guarantee<br><span class="dashicons dashicons-yes"></span> Secure payment<br><span class="dashicons dashicons-yes"></span> Instant activation</span>';
       $out .= '</td>';
       $out .= '<td>';
       if ($promo_active) {
-        $out .= '<div class="gmw-promo-button gmw-promo-button-extra"><a href="http://www.gmapswidget.com/buy/?p=pro-welcome4&r=welcome-GMW+v' . GMW::$version . '" target="_blank">only <strike>$39</strike> $29</a><span>discount: 25%</span></div>';
+        $out .= '<div class="gmw-promo-button gmw-promo-button-extra"><a href="https://gum.co/gmw-pro/welcomepromo4?wanted=true&plugin_info=GMW+v' . GMW::$version . '" target="_blank" data-gumroad-single-product="true">only <strike>$39</strike> $29</a><span>discount: 25%</span></div>';
       } elseif ($promo_active2) {
-        $out .= '<div class="gmw-promo-button gmw-promo-button-extra"><a href="http://www.gmapswidget.com/buy/?p=olduser4&r=olduser-GMW+v' . GMW::$version . '" target="_blank">only <strike>$39</strike> $29</a><span>discount: 25%</span></div>';
+        $out .= '<div class="gmw-promo-button gmw-promo-button-extra"><a href="https://gum.co/gmw-pro/olduser4?wanted=true&plugin_info=GMW+v' . GMW::$version . '" target="_blank" data-gumroad-single-product="true">only <strike>$39</strike> $29</a><span>discount: 25%</span></div>';
       } else {
-        $out .= '<div class="gmw-promo-button"><a href="http://www.gmapswidget.com/buy/?p=pro-unlimited2&r=GMW+v' . GMW::$version . '" data-noprevent="1" target="_blank">BUY $29</a></div>';
+        $out .= '<div class="gmw-promo-button"><a href="https://gum.co/gmw-pro?wanted=true&plugin_info=GMW+v' . GMW::$version . '" data-noprevent="1" data-gumroad-single-product="true" target="_blank">BUY $39</a></div>';
       }
       $out .= '<span class="instant-download"><span class="dashicons dashicons-yes"></span> 100% No-Risk Money Back Guarantee<br><span class="dashicons dashicons-yes"></span> Secure payment<br><span class="dashicons dashicons-yes"></span> Instant activation</span>';
       $out .= '</td>';
-      $out .= '<td><div class="gmw-promo-button"><a href="http://www.gmapswidget.com/buy/?p=yearly2&r=GMW+v' . GMW::$version . '" data-noprevent="1" target="_blank">$19 <small>/year</small></a></div>';
+      $out .= '<td><div class="gmw-promo-button"><a href="https://gum.co/gmw-yearly?wanted=false&yearly=true&plugin_info=GMW+v' . GMW::$version . '" data-noprevent="1" target="_blank" data-gumroad-single-product="true">$18.99 <small>/year</small></a></div>';
       $out .= '<span class="instant-download"><span class="dashicons dashicons-yes"></span> 100% No-Risk Money Back Guarantee<br><span class="dashicons dashicons-yes"></span> Secure payment<br><span class="dashicons dashicons-yes"></span> Instant activation</span>';
       $out .= '</td>';
       $out .= '</tr>';
@@ -891,8 +883,8 @@ class GMW {
       $plugin = plugin_basename(__FILE__);
       $update_url = wp_nonce_url(admin_url('update.php?action=upgrade-plugin&amp;plugin=' . urlencode($plugin)), 'upgrade-plugin_' . $plugin );
       $out .= '<div class="after_activate" ' . $visible . '>';
-      $out .= '<p class="center">Thank you for purchasing Google Maps Widget <b class="gmw-pro-red">PRO</b>! Your license has been verified and activated.</p><p class="center">Please <b>click the button below</b> to update plugin files to PRO version.</p>';
-      $out .= '<p class="center"><a href="' . esc_url($update_url) . '" class="button button-primary">Update Google Maps Widget</a></p>';
+      $out .= '<p class="center">Thank you for purchasing Maps Widget for Google Maps <b class="gmw-pro-red">PRO</b>! Your license has been verified and activated.</p><p class="center">Please <b>click the button below</b> to update plugin files to PRO version.</p>';
+      $out .= '<p class="center"><a href="' . esc_url($update_url) . '" class="button button-primary">Update Maps Widget for Google Maps</a></p>';
       $out .= '</div>';
 
       $out .= '</div>'; // content
@@ -953,51 +945,6 @@ class GMW {
       $out .= '</div>';
       $out .= '</div>'; // pro features screen
 
-      $out .= '<div id="gmw_dialog_trial" style="display: none;" class="gmw_promo_dialog_screen">
-             <div class="content">';
-      if (GMW::is_activated()) {
-        $visible = ' style="display: none;"';
-      } else {
-        $visible = '';
-      }
-      $out .= '<div class="before_trial" ' . $visible . '>
-             <h3>Fill out the form and get your free trial started <b>IMMEDIATELY</b>!</h3>';
-      $out .= '<p class="input_row">
-                 <input value="' . $name . '" type="text" id="gmw_name" name="gmw_name" placeholder="Your name">
-                 <span class="error name" style="display: none;">Please enter your name.</span>
-               </p>';
-      $out .= '<p class="input_row">
-                 <input value="' . $current_user->user_email . '" type="text" name="gmw_email" id="gmw_email" placeholder="Your email address" required="required">
-                 <span style="display: none;" class="error email">Please double check your email address.</span>
-               </p>';
-      $out .= '<p class="center">
-                 <a id="gmw_start_trial" href="#" class="button button-primary">Start my 7 days free trial</a>
-                 <p class="center">Or <a href="#" class="gmw_goto_intro">go PRO now</a></p>
-               </p>';
-      $out .= '</div>'; // before_trial
-
-      if (!GMW::is_activated()) {
-        $visible = ' style="display: none;"';
-      } else {
-        $visible = '';
-      }
-      $plugin = plugin_basename(__FILE__);
-      $update_url = wp_nonce_url(admin_url('update.php?action=upgrade-plugin&amp;plugin=' . urlencode($plugin)), 'upgrade-plugin_' . $plugin );
-      $out .= '<div class="after_trial" ' . $visible . '>';
-      $out .= '<p class="center">Your Google Maps Widget <b class="gmw-pro-red">PRO</b> trial has been activated!</p><p class="center">Please <b>click the button below</b> to update plugin files to PRO version.</p>';
-      $out .= '<p class="center"><a href="' . esc_url($update_url) . '" class="button button-primary">Update Google Maps Widget to PRO</a></p>';
-      $out .= '</div>';
-
-      $out .= '</div>'; // content
-
-      $out .= '<div class="footer">
-                    <ul class="gmw-faq-ul">
-                      <li>We\'ll never share your email address</li>
-                      <li>We hate spam too, so we never send it</li>
-                    </ul>
-                  </div>';
-      $out .= '</div>'; // trial screen
-
       $out .= '</div>'; // dialog
     } // promo dialog
 
@@ -1019,13 +966,13 @@ class GMW {
   // complete options screen markup
   static function settings_screen() {
     if (!current_user_can('manage_options')) {
-      wp_die('Cheating? You don\'t have the right to access this page.', 'Google Maps Widget', array('back_link' => true));
+      wp_die('Cheating? You don\'t have the right to access this page.', 'Maps Widget for Google Maps', array('back_link' => true));
     }
 
     $options = GMW::get_options();
 
     echo '<div class="wrap gmw-options">';
-    echo '<h1><img alt="' . __('Google Maps Widget', 'google-maps-widget') . '" title="' . __('Google Maps Widget', 'google-maps-widget') . '" height="55" src="' . GMW_PLUGIN_URL . 'images/gmw-logo.png"></h1>';
+    echo '<h1><img alt="' . __('Maps Widget for Google Maps', 'google-maps-widget') . '" title="' . __('Maps Widget for Google Maps', 'google-maps-widget') . '" height="55" src="' . GMW_PLUGIN_URL . 'images/gmw-logo.png"></h1>';
 
     echo '<form method="post" action="options.php">';
     settings_fields(GMW::$options);
@@ -1044,7 +991,7 @@ class GMW {
 
     echo '<table class="form-table disabled">';
     echo '<tr>
-          <th scope="row"><label for="widget_id">' . __('Google Maps Widget', 'google-maps-widget') . '</label></th>
+          <th scope="row"><label for="widget_id">' . __('Maps Widget for Google Maps', 'google-maps-widget') . '</label></th>
           <td><select disabled="disabled" name="' . GMW::$options . '[widget_id]" id="widget_id">';
     echo '<option value="">- select the widget to import pins to -</option>';
     echo '</select><br><span class="description">Choose a widget you want to import pins to. Any existing pins will be overwritten with the new pins. Other widget options will not be altered in any way.</span></td></tr>';
@@ -1087,13 +1034,13 @@ class GMW {
     echo '<table class="form-table disabled">';
     echo '<tr>
           <th scope="row"><label for="sc_map">' . __('Map Shortcode', 'google-maps-widget') . '</label></th>
-          <td><input class="regular-text" name="' . GMW::$options . '[sc_map]" type="text" id="sc_map" value="' . esc_attr($options['sc_map']) . '" disabled="disabled" placeholder="Map shortcode" required="required" oninvalid="this.setCustomValidity(\'Please enter the shortcode you want to use for Google Maps Widget maps.\')" oninput="setCustomValidity(\'\')">
+          <td><input class="regular-text" name="' . GMW::$options . '[sc_map]" type="text" id="sc_map" value="' . esc_attr($options['sc_map']) . '" disabled="disabled" placeholder="Map shortcode" required="required" oninvalid="this.setCustomValidity(\'Please enter the shortcode you want to use for Maps Widget for Google Maps maps.\')" oninput="setCustomValidity(\'\')">
           <p class="description">If the default shortcode "gmw" is taken by another plugin change it to something else, eg: "gmaps".</p></td>
           </tr>';
     echo '<tr>
           <th scope="row"><label for="track_ga">' . __('Track with Google Analytics', 'google-maps-widget') . '</label></th>
           <td><input name="' . GMW::$options . '[track_ga]" disabled="disabled" type="checkbox" id="track_ga" value="1"' . checked('1', $options['track_ga'], false) . '>
-          <span class="description">Each time the interactive map is opened either in lightbox or as a thumbnail replacement a Google Analytics Event will be tracked.<br>You need to have GA already configured on the site. It is fully compatibile with all GA plugins and all GA tracking code versions. Default: unchecked.</span></td></tr>';
+          <span class="description">Each time the interactive map is opened either in lightbox or as a thumbnail replacement a Google Analytics Event will be tracked.<br>You need to have GA already configured on the site. It is fully compatible with all GA plugins and all GA tracking code versions. Default: unchecked.</span></td></tr>';
     echo '<tr>
           <th scope="row"><label for="include_jquery">' . __('Include jQuery', 'google-maps-widget') . '</label></th>
           <td><input name="' . GMW::$options . '[include_jquery]" disabled="disabled" type="checkbox" id="include_jquery" value="1"' . checked('1', $options['include_jquery'], false) . '>
@@ -1130,13 +1077,13 @@ class GMW {
     echo '<tr>
           <th scope="row"><span>' . __('Export widgets', 'google-maps-widget') . '</span></th>
           <td><a href="#" class="button button-secondary button-disabled">Download export file</a>
-          <p class="description">The export file will only containt Google Maps Widget widgets. This includes active (in sidebars) widgets and inactive ones as well.</p></td>
+          <p class="description">The export file will only contain Maps Widget for Maps Widget for Google Maps. This includes active (in sidebars) widgets and inactive ones as well.</p></td>
           </tr>';
     echo '<tr>
           <th scope="row"><span>' . __('Import widgets', 'google-maps-widget') . '</span></th>
           <td><input type="file" disabled="disabled" name="gmw_widgets_import" id="gmw_widgets_import" accept=".txt">
           <input type="button" disabled="disabled" name="submit-import" id="submit-import" class="button button-secondary button-large" value="Import widgets">';
-    echo '<p class="description">Only use TXT export files generated by Google Maps Widget.<br>
+    echo '<p class="description">Only use TXT export files generated by Maps Widget for Google Maps.<br>
           Existing GMW widgets will not be overwritten nor any other widgets touched. If you renamed a sidebar or old one no longer exists widgets will be placed in the inactive widgets area.</p></td>
           </tr>';
     echo '</table>';
@@ -1147,8 +1094,8 @@ class GMW {
       $plugin = plugin_basename(__FILE__);
       $update_url = wp_nonce_url(admin_url('update.php?action=upgrade-plugin&amp;plugin=' . urlencode($plugin)), 'upgrade-plugin_' . $plugin );
 
-      echo '<p>Your <b class="gmw-pro-red">PRO</b> license is validated &amp; active. Please update the plugin to activate PRO features. In case of any problems, contact <a href="mailto:gmw@webfactoryltd.com?subject=Update%20problem" title="Contact Google Maps Widget PRO support">support</a>.</p>';
-      echo '<p><a href="' . esc_url($update_url) . '" class="button button-primary">Update Google Maps Widget</a></p>';
+      echo '<p>Your <b class="gmw-pro-red">PRO</b> license is validated &amp; active. Please update the plugin to activate PRO features. In case of any problems, contact <a href="mailto:gmw@webfactoryltd.com?subject=Update%20problem" title="Contact Maps Widget for Google Maps PRO support">support</a>.</p>';
+      echo '<p><a href="' . esc_url($update_url) . '" class="button button-primary">Update Maps Widget for Google Maps</a></p>';
     } else {
       echo '<p>If you already bought the <b class="gmw-pro-red">PRO</b> license please <a href="#" data-target-screen="gmw_dialog_activate" class="open_promo_dialog">enter your license key</a> to activate it.</p>';
       echo '<p>Interested in a lifetime <b class="gmw-pro-red">PRO</b> license that offers more than 50 extra fetures?&nbsp;&nbsp; <a href="#" class="open_promo_dialog button button-primary">Upgrade now!</a></p>';
@@ -1165,7 +1112,8 @@ class GMW {
   static function activate_license_key_ajax() {
     check_ajax_referer('gmw_activate_license_key');
 
-    $code = str_replace(' ', '', $_POST['code']);
+    $code = substr(sanitize_key(@$_POST['code']), 0, 64);
+    $code = str_replace(' ', '', $code);
 
     if (strlen($code) < 6 || strlen($code) > 50) {
       wp_send_json_error(__('Please double-check the license key. The format is not valid.', 'google-maps-widget'));
@@ -1281,55 +1229,6 @@ class GMW {
   } // update_details
 
 
-  // send user's name & email to activate trial
-  static function get_trial_ajax() {
-    check_ajax_referer('gmw_get_trial');
-
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    if (defined('WPLANG')) {
-      $lang = strtolower(substr(WPLANG, 0, 2));
-    } else {
-      $lang = 'en';
-    }
-
-    $request_params = array('sslverify' => false, 'timeout' => 15, 'redirection' => 2);
-    $request_args = array('action' => 'get_trial',
-                          'name' => $name,
-                          'email' => $email,
-                          'version' => GMW::$version,
-                          'lang' => $lang,
-                          'codebase' => 'free',
-                          'ip' => $_SERVER['REMOTE_ADDR'],
-                          'site' => get_home_url());
-
-    $url = add_query_arg($request_args, GMW::$licensing_servers[0]);
-    $response = wp_remote_get(esc_url_raw($url), $request_params);
-
-    if (is_wp_error($response) || !wp_remote_retrieve_body($response)) {
-      $url = add_query_arg($request_args, GMW::$licensing_servers[1]);
-      $response = wp_remote_get(esc_url_raw($url), $request_params);
-    }
-
-    if (!is_wp_error($response) && wp_remote_retrieve_body($response)) {
-      $result = wp_remote_retrieve_body($response);
-      $result = json_decode($result, true);
-      if (!empty($result['success']) && $result['success'] === true && is_array($result['data']) && sizeof($result['data']) == 3) {
-        $result['data']['license_active'] = true;
-        GMW::set_options($result['data']);
-        set_site_transient('update_plugins', null);
-        wp_send_json_success();
-      } elseif (isset($result['success']) && $result['success'] === false && !empty($result['data'])) {
-        wp_send_json_error($result['data']);
-      } else {
-        wp_send_json_error('Invalid response from licensing server. Please try again later.');
-      }
-    } else {
-      wp_send_json_error('Unable to contact licensing server. Please try again in a few moments.');
-    }
-  } // get_trial_ajax
-
-
   // helper function for creating dropdowns
   static function create_select_options($options, $selected = null, $output = true) {
     $out = "\n";
@@ -1431,12 +1330,90 @@ class GMW {
     if (!isset($options['first_version']) || !isset($options['first_install'])) {
       $options['first_version'] = GMW::$version;
       $options['first_install'] = current_time('timestamp');
-      $options['last_tracking'] = false;
       GMW::set_options($options);
+    }
+
+    if (isset($options['allow_tracking']) && $options['allow_tracking'] === true) {
+      wp_clear_scheduled_hook('gmw_biweekly_cron');
     }
 
     self::reset_pointers();
   } // activate
+
+
+  // helper function for adding plugins to fav list
+  static function featured_plugins_tab($args) {
+      add_filter('plugins_api_result', array('GMW', 'plugins_api_result'), 10, 3);
+
+      return $args;
+  } // featured_plugins_tab
+
+
+  // add single plugin to list of favs
+  static function add_plugin_favs($plugin_slug, $res) {
+    if (!empty($res->plugins) && is_array($res->plugins)) {
+      foreach ($res->plugins as $plugin) {
+        if (is_object($plugin) && $plugin->slug == $plugin_slug) {
+          return $res;
+        }
+      } // foreach
+    }
+
+    if ($plugin_info = get_transient('wf-plugin-info-' . $plugin_slug)) {
+      array_unshift($res->plugins, $plugin_info);
+    } else {
+      $plugin_info = plugins_api('plugin_information', array(
+        'slug'   => $plugin_slug,
+        'is_ssl' => is_ssl(),
+        'fields' => array(
+            'banners'           => true,
+            'reviews'           => true,
+            'downloaded'        => true,
+            'active_installs'   => true,
+            'icons'             => true,
+            'short_description' => true,
+        )
+      ));
+      if (!is_wp_error($plugin_info)) {
+        $res->plugins[] = $plugin_info;
+        set_transient('wf-plugin-info-' . $plugin_slug, $plugin_info, DAY_IN_SECONDS * 7);
+      }
+    }
+
+    return $res;
+  } // add_plugin_favs
+
+
+  // add our plugins to recommended list
+  static function plugins_api_result($res, $action, $args) {
+    remove_filter('plugins_api_result', array('GMW', 'plugins_api_result'), 10, 3);
+
+    $res = self::add_plugin_favs('minimal-coming-soon-maintenance-mode', $res);
+
+    return $res;
+  } // plugins_api_result
+
+
+  // counts the number of active GMW widgets in all sidebars
+  static function count_active_widgets() {
+    $count = 0;
+
+    $sidebars = get_option('sidebars_widgets', array());
+    foreach ($sidebars as $sidebar_name => $widgets) {
+      if (strpos($sidebar_name, 'inactive') !== false || strpos($sidebar_name, 'orphaned') !== false) {
+        continue;
+      }
+      if (is_array($widgets)) {
+        foreach ($widgets as $widget_name) {
+          if (strpos($widget_name, 'googlemapswidget') !== false) {
+            $count++;
+          }
+        }
+      }
+    } // foreach sidebar
+
+    return $count;
+  } // count_active_widgets
 
 
   // clean up on deactivation
@@ -1444,7 +1421,7 @@ class GMW {
     $options = GMW::get_options();
 
     if (isset($options['allow_tracking']) && $options['allow_tracking'] === true) {
-      GMW_tracking::clear_cron();
+      wp_clear_scheduled_hook('gmw_biweekly_cron');
     }
 
     delete_transient('gmw_pointers');
@@ -1454,8 +1431,10 @@ class GMW {
   // clean up on uninstall / delete
   static function uninstall() {
     // at the moment, due to lite/pro upgrade we never delete options
-    if (false) {
-      delete_option(GMW::$options);
+    $options = GMW::get_options();
+    
+    if (isset($options['allow_tracking']) && $options['allow_tracking'] === true) {
+      wp_clear_scheduled_hook('gmw_biweekly_cron');
     }
 
     delete_transient('gmw_pointers');

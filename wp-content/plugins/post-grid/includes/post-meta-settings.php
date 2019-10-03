@@ -6,18 +6,10 @@
 
 if ( ! defined('ABSPATH')) exit;  // if direct access
 
-
-
-
-
-
-
-
 /**
  * Adds a box to the main column on the Post and Page edit screens.
  */
-function post_grid_post_settings()
-	{
+function post_grid_post_settings(){
 		
 		$post_types = get_post_types();
 		unset($post_types['post_grid']);
@@ -25,9 +17,10 @@ function post_grid_post_settings()
 		$screens = $post_types;
 		foreach ( $screens as $screen )
 			{
-				add_meta_box('post_grid_post_settings',__( 'Post Grid - Post Options','post-grid'),'post_grid_post_settings_input', $screen);
+				add_meta_box('post_grid_post_settings',__( 'Post Grid - Post Options', 'post-grid'),'post_grid_post_settings_input', $screen);
 			}
 	}
+	
 add_action( 'add_meta_boxes', 'post_grid_post_settings' );
 
 
@@ -35,227 +28,90 @@ function post_grid_post_settings_input( $post ) {
 	
 	global $post;
 	wp_nonce_field( 'post_grid_post_settings_input', 'post_grid_post_settings_input_nonce' );
-	
-	
-	$post_grid_post_settings = get_post_meta( $post->ID, 'post_grid_post_settings', true );
-	
 
-	if(!empty($post_grid_post_settings['post_skin'])){
-		$post_skin = $post_grid_post_settings['post_skin'];
-		}
-	else{
-		$post_skin = 'flat';
-		}	
-	
-	if(!empty($post_grid_post_settings['custom_thumb_source'])){
-		$custom_thumb_source = $post_grid_post_settings['custom_thumb_source'];
-		}
-	else{
-		$custom_thumb_source = post_grid_plugin_url.'assets/frontend/css/images/placeholder.png';
-		}	
-	
-	
-	if(!empty($post_grid_post_settings['font_awesome_icon'])){
-		$font_awesome_icon = $post_grid_post_settings['font_awesome_icon'];
-		}
-	else{
-		$font_awesome_icon = '';
-		}		
-	
-	
-	if(!empty($post_grid_post_settings['font_awesome_icon_color'])){
-		$font_awesome_icon_color = $post_grid_post_settings['font_awesome_icon_color'];
-		}
-	else{
-		$font_awesome_icon_color = '#737272';
-		}
-		
-	if(!empty($post_grid_post_settings['font_awesome_icon_size'])){
-		$font_awesome_icon_size = $post_grid_post_settings['font_awesome_icon_size'];
-		}
-	else{
-		$font_awesome_icon_size = '50px';
-	}
-	
-	
-		
-	if(!empty($post_grid_post_settings['custom_youtube_id'])){
-		$custom_youtube_id = $post_grid_post_settings['custom_youtube_id'];
-		}
-	else{
-		$custom_youtube_id = '';
-	}	
-		
-		
-		
-	if(!empty($post_grid_post_settings['custom_vimeo_id'])){
-		$custom_vimeo_id = $post_grid_post_settings['custom_vimeo_id'];
-		}
-	else{
-		$custom_vimeo_id = '';
-	}	
-
-
-	if(!empty($post_grid_post_settings['custom_dailymotion_id'])){
-		$custom_dailymotion_id = $post_grid_post_settings['custom_dailymotion_id'];
-		}
-	else{
-		$custom_dailymotion_id = '';
-	}
+    $post_id = $post->ID;
 
 
 
-	if(!empty($post_grid_post_settings['custom_mp3_url'])){
-		$custom_mp3_url = $post_grid_post_settings['custom_mp3_url'];
-		}
-	else{
-		$custom_mp3_url = '';
-	}	
-
-
-	if(!empty($post_grid_post_settings['custom_soundcloud_id'])){
-		$custom_soundcloud_id = $post_grid_post_settings['custom_soundcloud_id'];
-		}
-	else{
-		$custom_soundcloud_id = '';
-	}	
-
-
-//var_dump($post_skin);
-	
-	
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-?>
-
-    <div class="para-settings post-grid-metabox">
 
 
 
-        <ul class="tab-nav"> 
-            <li nav="1" class="nav1 active"><i class="fa fa-code"></i> <?php _e('Options','post-grid'); ?></li>
-            
-            
-            <li nav="2" class="nav2"><i class="fa fa-bookmark-o"></i> <?php _e('Font Awesome','post-grid'); ?></li>
-            <li nav="3" class="nav3"><i class="fa fa-play"></i> <?php _e('Custom Media','post-grid'); ?></li>
-            
-                     
-                       
-        </ul> <!-- tab-nav end -->
-        
-		<ul class="box">
-            <li style="display: block;" class="box1 tab-box active">
-                <div class="option-box">
-                    <p class="option-title"><?php _e('Post Skin','post-grid'); ?></p>
-                    <p class="option-info"><?php _e('Default skin for this post only','post-grid'); ?></p>
-                    
 
-                    
-                    
-                    <select class="post_skin" name="post_grid_post_settings[post_skin]">
-                    <option value="" <?php if($post_skin=='') echo "selected"; ?>>None</option>
-                    	<?php
-                        
-						$class_post_grid_functions = new class_post_grid_functions();
-						$post_grid_skins = $class_post_grid_functions->skins();
-						
-						//var_dump($post_grid_skins);
-						
-						foreach($post_grid_skins as $skin_key=>$skin_data){
-							
-							?>
-                            <option value="<?php echo $skin_key; ?>" <?php if($post_skin==$skin_key) echo "selected"; ?>><?php echo $skin_data['name']; ?></option>
-                            <?php
-							
-							
-							}
-						
-						?>
 
-                                          
-                    </select> 
-                    
-                </div>
-                
-                
-                
-                <div class="option-box">
-                    <p class="option-title"><?php _e('Custom thumbnail source','post-grid'); ?></p>
-                    <p class="option-info"></p>
-					<input type="text" name="post_grid_post_settings[custom_thumb_source]" value="<?php echo $custom_thumb_source; ?>" />
-                    
-                </div>                
-                
-                
-                
-                
-                
-                 
-            </li>
-            <li style="display: none;" class="box2 tab-box">
-            
-                <div class="option-box">
-                    <p class="option-title"><?php _e('Font awesome icon ID','post-grid'); ?></p>
-                    <p class="option-info"><?php _e('Font awesome icon id, ex: <b>fa-share-alt</b> , please check font awesome incon here <a href="http://fortawesome.github.io/Font-Awesome/icons/">http://fortawesome.github.io/Font-Awesome/icons/</a>','post-grid'); ?></p>
-					<input placeholder="fa-share-alt" type="text" name="post_grid_post_settings[font_awesome_icon]" value="<?php echo $font_awesome_icon; ?>" />
-                    
-                    <p class="option-info"><?php _e('Icon Color','post-grid'); ?></p>
-					<input placeholder="" class="color" type="text" name="post_grid_post_settings[font_awesome_icon_color]" value="<?php echo $font_awesome_icon_color; ?>" />                    
-                    <p class="option-info"><?php _e('Icon size','post-grid'); ?></p>
-					<input placeholder="50px" type="text" name="post_grid_post_settings[font_awesome_icon_size]" value="<?php echo $font_awesome_icon_size; ?>" />                    
-                    
-                </div> 
-            
-            </li>
-            
-            <li style="display: none;" class="box3 tab-box">
-            
-                <div class="option-box">
-                    <p class="option-title"></p>
-                    <p class="option-info"><?php _e('Custom youtube id','post-grid'); ?></p>
-                    <input placeholder="S97MaG3kOMY" type="text" name="post_grid_post_settings[custom_youtube_id]" value="<?php echo $custom_youtube_id; ?>" /> 
-                    
-                    
-                    <p class="option-info"><?php _e('Custom vimeo id','post-grid'); ?></p>
-                    <input placeholder="152379391" type="text" name="post_grid_post_settings[custom_vimeo_id]" value="<?php echo $custom_vimeo_id; ?>" />
-                    
-                    <p class="option-info"><?php _e('Custom dailymotion id','post-grid'); ?></p>
-                    <input placeholder="x4693dw" type="text" name="post_grid_post_settings[custom_dailymotion_id]" value="<?php echo $custom_dailymotion_id; ?>" />                    
-                    
-                    
-                    <p class="option-info"><?php _e('Custom mp3 URL','post-grid'); ?></p>
-                    <input placeholder="http://hello.com/file/song.mp3" type="text" name="post_grid_post_settings[custom_mp3_url]" value="<?php echo $custom_mp3_url; ?>" />                                        
-                    
-                    <p class="option-info"><?php _e('Custom soundcloud ID','post-grid'); ?></p>
-                    <input placeholder="237668695" type="text" name="post_grid_post_settings[custom_soundcloud_id]" value="<?php echo $custom_soundcloud_id; ?>" />                     
-                    
-                    
-                    
-                    
-                    
-                </div> 
-            
-            </li>
-            
+    $post_grid_settings_tab = array();
+
+
+    $post_grid_settings_tab[] = array(
+        'id' => 'options',
+        'title' => __('<i class="fas fas fa-tools"></i> Options','post-grid'),
+        'priority' => 1,
+        'active' => true,
+    );
+
+    $post_grid_settings_tab[] = array(
+        'id' => 'font_awesome',
+        'title' => __('<i class="fas fa-laptop-code"></i> Font Awesome','post-grid'),
+        'priority' => 2,
+        'active' => false,
+    );
+
+    $post_grid_settings_tab[] = array(
+        'id' => 'custom_media',
+        'title' => __('<i class="fa fa-magic"></i> Custom Media','post-grid'),
+        'priority' => 3,
+        'active' => false,
+    );
+
+
+
+    $post_grid_settings_tabs = apply_filters('post_grid_post_settings_tabs', $post_grid_settings_tab);
+
+
+    $tabs_sorted = array();
+    foreach ($post_grid_settings_tabs as $page_key => $tab) $tabs_sorted[$page_key] = isset( $tab['priority'] ) ? $tab['priority'] : 0;
+    array_multisort($tabs_sorted, SORT_ASC, $post_grid_settings_tabs);
+
+
+
+    ?>
+
+    <div class="settings-tabs vertical">
+        <ul class="tab-navs">
+            <?php
+            foreach ($post_grid_settings_tabs as $tab){
+                $id = $tab['id'];
+                $title = $tab['title'];
+                $active = $tab['active'];
+                $data_visible = isset($tab['data_visible']) ? $tab['data_visible'] : '';
+                $hidden = isset($tab['hidden']) ? $tab['hidden'] : false;
+                ?>
+                <li <?php if(!empty($data_visible)):  ?> data_visible="<?php echo $data_visible; ?>" <?php endif; ?> class="tab-nav <?php if($hidden) echo 'hidden';?> <?php if($active) echo 'active';?>" data-id="<?php echo $id; ?>"><?php echo $title; ?></li>
+                <?php
+            }
+            ?>
         </ul>
+        <?php
+        foreach ($post_grid_settings_tabs as $tab){
+            $id = $tab['id'];
+            $title = $tab['title'];
+            $active = $tab['active'];
 
-    
+
+            ?>
+
+            <div class="tab-content <?php if($active) echo 'active';?>" id="<?php echo $id; ?>">
+                <?php
+                do_action('post_grid_post_settings_tabs_content_'.$id, $tab, $post_id);
+                ?>
+            </div>
+            <?php
+        }
+        ?>
     </div>
-    
-    
-   
-    
+    <div class="clear clearfix"></div>
+
+
 <?php
-
-
 	
 }
 
@@ -285,8 +141,6 @@ function post_grid_post_settings_save( $post_id ) {
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
 		return $post_id;
 
-
-
 	/* OK, its safe for us to save the data now. */
 	
 	// Sanitize user input.
@@ -298,6 +152,22 @@ function post_grid_post_settings_save( $post_id ) {
 add_action( 'save_post', 'post_grid_post_settings_save' );
 
 
+
+
+
+
+
+
+
+
+function post_grid_post_settings_attachment_meta(){
+    global $post;
+    if( isset( $_POST['post_grid_post_settings'] ) ){
+        update_post_meta( $post->ID, 'post_grid_post_settings', $_POST['post_grid_post_settings'] );
+    }
+}
+
+add_action('edit_attachment', 'post_grid_post_settings_attachment_meta');
 
 
 

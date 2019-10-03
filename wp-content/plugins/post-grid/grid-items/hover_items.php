@@ -29,12 +29,12 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 				
 				if($post_grid_hover_items_zoom_display == 'yes')
 					{
-						$html_hover .= '<a title="Zoom." class="zoom"></a>';
+						$html_hover .= '<a title="'.__('Zoom.', 'post-grid').'" class="zoom"></a>';
 					}
 				
 				if($post_grid_hover_items_link_display == 'yes')
 					{
-						$html_hover .= '<a title="Read More." href="'.get_the_permalink(get_the_ID()).'" class="post-link"></a>';
+						$html_hover .= '<a title="'.__('Read More.', 'post-grid').'" href="'.get_the_permalink(get_the_ID()).'" class="post-link"></a>';
 					}								
 				
 				if($post_grid_hover_items_share_display == 'yes')

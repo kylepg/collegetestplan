@@ -13,7 +13,7 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 		$is_image = false;
 		foreach($media_source as $source_info){
 		 
-			$media = post_grid_get_media($source_info['id'], $featured_img_size, $thumb_linked);
+			$media = post_grid_get_media($item_post_id, $source_info['id'], $featured_img_size, $thumb_linked);
 			
 			//var_dump($media);
 			
@@ -22,7 +22,7 @@ if ( ! defined('ABSPATH')) exit;  // if direct access
 			if(!empty($source_info['checked'])){
 				if(!empty($media)){
 			
-					$html_media = post_grid_get_media($source_info['id'], $featured_img_size, $thumb_linked);
+					$html_media = post_grid_get_media($item_post_id, $source_info['id'], $featured_img_size, $thumb_linked);
 					$is_image = true;
 				}
 			   else{
